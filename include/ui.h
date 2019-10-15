@@ -11,6 +11,8 @@
 #include <Wt/WTabWidget.h>
 #include <Wt/WMenuItem.h>
 
+class MainApplication;
+
 class Navigation:public Wt::WContainerWidget
 {
 public:
@@ -33,8 +35,12 @@ private:
 class LoginView:public Wt::WContainerWidget
 {
 public:
-	LoginView();
+	LoginView(MainApplication& app);
 private:
+	void Login();
+
+	MainApplication& m_Application;
+
 	Wt::WText* m_pUserNameNotify,*m_pPasswordNotify;
 	Wt::WLineEdit *m_pUserNameInput,*m_pPasswordInput;
 	Wt::WPushButton* m_pSubmit;

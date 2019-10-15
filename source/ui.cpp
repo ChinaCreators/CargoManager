@@ -55,16 +55,26 @@ void Navigation::AddTab(const Wt::WString& title,std::unique_ptr<Wt::WWidget>&& 
 	m_pLayout->addWidget(std::move(ptab));
 }
 
-LoginView::LoginView()
+LoginView::LoginView(MainApplication& app)
+	:m_Application(app)
 {
 	setContentAlignment(Wt::AlignmentFlag::Center);
+	setVerticalAlignment(Wt::AlignmentFlag::Center);
+	addStyleClass("login_view");
 	m_pUserNameNotify=addWidget(std::make_unique<Wt::WText>(L"用户名"));
 	m_pUserNameInput=addWidget(std::make_unique<Wt::WLineEdit>());
 	addWidget(std::make_unique<Wt::WBreak>());
 	m_pPasswordNotify=addWidget(std::make_unique<Wt::WText>(L"密码"));
 	m_pPasswordInput=addWidget(std::make_unique<Wt::WLineEdit>());
+	m_pPasswordInput->setAttributeValue("type","password");
 	addWidget(std::make_unique<Wt::WBreak>());
 	m_pSubmit=addWidget(std::make_unique<Wt::WPushButton>("Sign in"));
+}
+
+void LoginView::Login()
+{
+	std::string name=m_pUserNameInput->text().toUTF8();
+	std::string pwd=m_pPasswordInput->text().toUTF8();
 }
 
 MainApplication::MainApplication(const Wt::WEnvironment& env)
@@ -80,7 +90,7 @@ MainApplication::MainApplication(const Wt::WEnvironment& env)
 
 	m_pNavigation=root()->addWidget(std::make_unique<Navigation>());
 
-	m_pNavigation->AddTab(L"登录",std::make_unique<LoginView>());
+	m_pNavigation->AddTab(L"登录",std::make_unique<LoginView>(*this));
 	m_pNavigation->AddTab(L"商铺",std::make_unique<ShopView>());
 }
 
