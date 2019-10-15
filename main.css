@@ -1,4 +1,10 @@
 .tab_item
 {
 	display: inline-block;
+	cursor: pointer;
+}
+
+.tab_item .active_tab
+{
+	color:gray;
 }

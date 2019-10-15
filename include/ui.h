@@ -14,10 +14,19 @@
 class Navigation:public Wt::WContainerWidget
 {
 public:
+	Navigation();
+
 	void AddTab(const Wt::WString& title,std::unique_ptr<Wt::WWidget>&& ptr);
 private:
+	void SetActive(Wt::WWidget* ptab,Wt::WWidget* pcontent);
+
 	std::map<Wt::WString,Wt::WWidget*> m_Content;
 	Wt::WContainerWidget* m_Tab;
+
+	WWidget* m_pActiveTab;
+	WWidget* m_pActiveContent;
+
+	Wt::WString m_DefaultStyleClassesForTab,m_NewStyleClassesForTab;
 };
 
 class LoginView:public Wt::WContainerWidget
