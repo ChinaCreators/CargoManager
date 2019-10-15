@@ -15,5 +15,25 @@ LoginView::LoginView()
 MainApplication::MainApplication(const Wt::WEnvironment& env)
 	:WApplication(env)
 {
+	m_AccountServer.m_SignUpSignal.connect([this](const Wt::WString& name){
+		m_UserName=name;
+		m_pTopLabel->UpdateUser();	
+	});
+
+	m_pTopLabel=root()->addWidget(std::make_unique<TopLabel>());
 	m_pLoginView=root()->addWidget(std::make_unique<LoginView>());
+}
+
+TopLabel::TopLabel(const Wt::WString& user_name)
+	:m_UserName(user_name)
+{
+	m_pLayout=setLayout(std::make_unique<Wt::WHBoxLayout>());
+	
+	m_pUserName=m_pLayout->addWidget(std::make_unique<Wt::WText>());
+
+}
+
+void TopLabel::UpdateUser()
+{
+	m_pUserName->setText(m_UserName);
 }

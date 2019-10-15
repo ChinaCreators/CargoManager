@@ -40,22 +40,22 @@ void AccountManager::SaveAccount()
 	m_File.close();
 }
 
-void AccountManager::SignUp(const std::string& name,std::string& pwd)
+void AccountServer::SignUp(const std::string& name,std::string& pwd)
 {
-	auto iter=m_Content.find(name);
-	if(iter!=m_Content.end())
+	auto iter=AccountManager::GetInstance().m_Content.find(name);
+	if(iter!=AccountManager::GetInstance().m_Content.end())
 		m_ErrorHappenedSignal.emit(L"重复的账号名");
 	else
 	{
-		m_Content.insert(std::make_pair(name,Account{name,std::hash<std::string>{}(pwd)}));
+		AccountManager::GetInstance().m_Content.insert(std::make_pair(name,Account{name,std::hash<std::string>{}(pwd)}));
 		m_SignUpSignal.emit(Wt::WString(name));
 	}
 }
 
-void AccountManager::SignIn(const std::string& name,std::string& pwd)
+void AccountServer::SignIn(const std::string& name,std::string& pwd)
 {
-	auto iter=m_Content.find(name);
-	if(iter==m_Content.end())
+	auto iter=AccountManager::GetInstance().m_Content.find(name);
+	if(iter==AccountManager::GetInstance().m_Content.end())
 		m_ErrorHappenedSignal.emit(L"没有该账号");
 	else
 	{

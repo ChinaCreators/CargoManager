@@ -14,16 +14,25 @@ struct Account
 	size_t m_HashedPassword;
 };
 
+class AccountServer:public Wt::WObject
+{
+public:
+	void SignUp(const std::string& name,std::string& pwd);
+	void SignIn(const std::string& name,std::string& pwd);
+
+	Wt::Signal<Wt::WString> m_ErrorHappenedSignal;
+	Wt::Signal<Wt::WString> m_SignUpSignal;
+};
+
 class AccountManager:public Wt::WObject
 {
 public:
+	friend AccountServer;
+
 	~AccountManager();
 
 	void LoadAccount();
 	void SaveAccount();
-
-	void SignUp(const std::string& name,std::string& pwd);
-	void SignIn(const std::string& name,std::string& pwd);
 
 	static AccountManager& GetInstance();
 private:
@@ -34,6 +43,4 @@ private:
 	std::fstream m_File;
 	std::map<std::string,Account> m_Content;
 
-	Wt::Signal<Wt::WString> m_ErrorHappenedSignal;
-	Wt::Signal<Wt::WString> m_SignUpSignal;
 };

@@ -7,6 +7,7 @@
 #include <Wt/WContainerWidget.h>
 #include <Wt/WText.h>
 #include <Wt/WBreak.h>
+#include <Wt/WHBoxLayout.h>
 
 class LoginView:public Wt::WContainerWidget
 {
@@ -18,12 +19,25 @@ private:
 	Wt::WPushButton* m_pSubmit;
 };
 
+class TopLabel:public Wt::WContainerWidget
+{
+public:
+	TopLabel(const Wt::WString& user_name);
+	void UpdateUser();
+private:
+	Wt::WHBoxLayout* m_pLayout;
+	Wt::WText* m_pUserName;
+	const Wt::WString& m_UserName;
+};
+
 class MainApplication:public Wt::WApplication
 {
 public:
 	MainApplication(const Wt::WEnvironment& env);
 private:
-	std::string m_UserName;
+	Wt::WString m_UserName;
+	AccountServer m_AccountServer;
 
+	TopLabel* m_pTopLabel;
 	LoginView* m_pLoginView;
 };
