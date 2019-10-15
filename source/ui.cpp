@@ -4,6 +4,7 @@ Navigation::Navigation()
 {
 	m_pActiveTab=nullptr;
 	m_pActiveContent=nullptr;
+	m_Tab=addWidget(std::make_unique<Wt::WContainerWidget>());
 }
 
 void Navigation::SetActive(Wt::WWidget* ptab,Wt::WWidget* pcontent)
@@ -19,7 +20,6 @@ void Navigation::SetActive(Wt::WWidget* ptab,Wt::WWidget* pcontent)
 
 void Navigation::AddTab(const Wt::WString& title,std::unique_ptr<Wt::WWidget>&& ptr)
 {
-	m_Tab=addWidget(std::make_unique<Wt::WContainerWidget>());
 	m_Content.insert(std::make_pair(title,ptr.get()));
 	
 	auto ptab=std::make_unique<Wt::WText>(title);
