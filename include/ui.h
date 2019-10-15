@@ -8,6 +8,17 @@
 #include <Wt/WText.h>
 #include <Wt/WBreak.h>
 #include <Wt/WHBoxLayout.h>
+#include <Wt/WTabWidget.h>
+#include <Wt/WMenuItem.h>
+
+class Navigation:public Wt::WContainerWidget
+{
+public:
+	void AddTab(const Wt::WString& title,std::unique_ptr<Wt::WWidget>&& ptr);
+private:
+	std::map<Wt::WString,Wt::WWidget*> m_Content;
+	Wt::WContainerWidget* m_Tab;
+};
 
 class LoginView:public Wt::WContainerWidget
 {
@@ -19,15 +30,11 @@ private:
 	Wt::WPushButton* m_pSubmit;
 };
 
-class TopLabel:public Wt::WContainerWidget
+class ShopView:public Wt::WContainerWidget
 {
 public:
-	TopLabel(const Wt::WString& user_name);
-	void UpdateUser();
+	ShopView();
 private:
-	Wt::WHBoxLayout* m_pLayout;
-	Wt::WText* m_pUserName;
-	const Wt::WString& m_UserName;
 };
 
 class MainApplication:public Wt::WApplication
@@ -37,7 +44,5 @@ public:
 private:
 	Wt::WString m_UserName;
 	AccountServer m_AccountServer;
-
-	TopLabel* m_pTopLabel;
-	LoginView* m_pLoginView;
+	Navigation* m_pNavigation;
 };

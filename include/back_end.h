@@ -31,16 +31,46 @@ public:
 
 	~AccountManager();
 
-	void LoadAccount();
-	void SaveAccount();
-
 	static AccountManager& GetInstance();
 private:
 	AccountManager();
+
+	void LoadAccount();
+	void SaveAccount();
 
 	static const std::string sm_FileName;
 
 	std::fstream m_File;
 	std::map<std::string,Account> m_Content;
 
+};
+
+struct Cargo
+{
+	std::string m_Name;
+	size_t m_Size;
+};
+
+struct Shop
+{
+	std::map<std::string,Cargo> m_Content;
+};
+
+class ShopManager:public Wt::WObject
+{
+public:
+	ShopManager(const std::string& user_name);
+	~ShopManager();
+
+	Shop& GetShop(const std::string& name);
+private:
+	void LoadShop();
+	void SaveShop();
+
+	std::string m_FileName;
+	std::fstream m_File;
+
+	std::map<std::string,Shop> m_Content;
+
+	Wt::Signal<Wt::WString> m_ErrorHappenedSignal;
 };
