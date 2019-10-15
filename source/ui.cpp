@@ -12,7 +12,7 @@ void Navigation::SetActive(Wt::WWidget* ptab,Wt::WWidget* pcontent)
 {
 	for(auto i:m_Content)
 		i.second->hide();
-	for(auto i:m_pLayout->widget()->children())
+	for(auto i:m_pTab->children())
 		i->setStyleClass(m_DefaultStyleClassesForTab);
 
 	ptab->setStyleClass(m_NewStyleClassesForTab);
@@ -41,6 +41,9 @@ void Navigation::AddTab(const Wt::WString& title,std::unique_ptr<Wt::WWidget>&& 
 		m_pActiveTab->addStyleClass("active_tab");
 		m_NewStyleClassesForTab=m_pActiveTab->styleClass();
 
+		//test
+		Wt::log("info")<<m_DefaultStyleClassesForTab<<" "<<m_NewStyleClassesForTab;
+		//
 		m_pActiveContent->show();
 	}
 	else
@@ -68,7 +71,7 @@ MainApplication::MainApplication(const Wt::WEnvironment& env)
 	:WApplication(env)
 {
 	setTitle("CargoManager");
-	useStyleSheet("main.css");
+	useStyleSheet("./resources/main.css");
 
 	m_AccountServer.m_SignUpSignal.connect([this](const Wt::WString& name){
 		m_UserName=name;

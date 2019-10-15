@@ -4,7 +4,7 @@
 	cursor: pointer;
 }
 
-.tab_item .active_tab
+.active_tab
 {
 	color:gray;
 }
