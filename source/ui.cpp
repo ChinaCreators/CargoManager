@@ -4,14 +4,15 @@ Navigation::Navigation()
 {
 	m_pActiveTab=nullptr;
 	m_pActiveContent=nullptr;
-	m_Tab=addWidget(std::make_unique<Wt::WContainerWidget>());
+	m_pTab=addWidget(std::make_unique<Wt::WContainerWidget>());
+	m_pLayout=m_pTab->setLayout(std::make_unique<Wt::WHBoxLayout>());
 }
 
 void Navigation::SetActive(Wt::WWidget* ptab,Wt::WWidget* pcontent)
 {
 	for(auto i:m_Content)
 		i.second->hide();
-	for(auto i:m_Tab->children())
+	for(auto i:m_pLayout->widget()->children())
 		i->setStyleClass(m_DefaultStyleClassesForTab);
 
 	ptab->setStyleClass(m_NewStyleClassesForTab);
@@ -48,7 +49,7 @@ void Navigation::AddTab(const Wt::WString& title,std::unique_ptr<Wt::WWidget>&& 
 	}
 
 	addWidget(std::move(ptr));
-	m_Tab->addWidget(std::move(ptab));
+	m_pLayout->addWidget(std::move(ptab));
 }
 
 LoginView::LoginView()

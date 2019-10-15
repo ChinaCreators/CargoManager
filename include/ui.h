@@ -21,7 +21,8 @@ private:
 	void SetActive(Wt::WWidget* ptab,Wt::WWidget* pcontent);
 
 	std::map<Wt::WString,Wt::WWidget*> m_Content;
-	Wt::WContainerWidget* m_Tab;
+	Wt::WContainerWidget* m_pTab;
+	Wt::WHBoxLayout* m_pLayout;
 
 	WWidget* m_pActiveTab;
 	WWidget* m_pActiveContent;
