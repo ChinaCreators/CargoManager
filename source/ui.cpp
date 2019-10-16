@@ -173,7 +173,9 @@ ShopView::ShopView(MainApplication& app)
 
 void ShopView::RefreshIndex()
 {
-	m_pIndex->children().clear();
+	auto buffer_ptr=m_pIndex;
+	buffer_ptr->hide();
+	m_pIndex=addNew<Wt::WContainerWidget>();
 	for(auto& i:m_Content.m_Content)
 	{
 		m_pIndex->addNew<Wt::WText>(i.first);
@@ -222,4 +224,6 @@ void ShopView::RefreshIndex()
 			}
 		}
 	);
+
+	buffer_ptr->children.clear();
 }
