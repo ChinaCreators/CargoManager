@@ -132,40 +132,94 @@ ShopView::ShopView(MainApplication& app)
 		m_Content.Init(name.toUTF8());
 		m_pError->hide();
 		m_pIndex=addWidget(std::make_unique<Wt::WContainerWidget>());
-		for(auto& i:m_Content.m_Content)
-		{
-			auto pindex_item=m_pIndex->addWidget(std::make_unique<Wt::WText>(i.first));
-			m_pIndex->addWidget(std::make_unique<Wt::WBreak>());
-			auto pcargo_view=addWidget(std::make_unique<Wt::WContainerWidget>());
+		RefreshIndex();
+		// for(auto& i:m_Content.m_Content)
+		// {
+		// 	auto pindex_item=m_pIndex->addWidget(std::make_unique<Wt::WText>(i.first));
+		// 	m_pIndex->addWidget(std::make_unique<Wt::WBreak>());
+		// 	auto pcargo_view=addWidget(std::make_unique<Wt::WContainerWidget>());
 
-			pindex_item->clicked().connect([=](){
-				m_pIndex->hide();
-				pcargo_view->show();
-			});
+		// 	pindex_item->clicked().connect([=](){
+		// 		m_pIndex->hide();
+		// 		pcargo_view->show();
+		// 	});
 
-			m_Shops.insert(std::make_pair(i.first,pcargo_view));
+		// 	m_Shops.insert(std::make_pair(i.first,pcargo_view));
 		
-			pcargo_view->addWidget(std::make_unique<Wt::WPushButton>(L"back"))->clicked().connect([=](){
-				pcargo_view->hide();
-				m_pIndex->show();
-							});	//back button
-			pcargo_view->addWidget(std::make_unique<Wt::WText>(i.first));		//shop name
-			pcargo_view->addWidget(std::make_unique<Wt::WBreak>());
-			for(auto& j:i.second.m_Content)
-			{
-				pcargo_view->addWidget(std::make_unique<Wt::WText>(j.first));
-				pcargo_view->addWidget(std::make_unique<Wt::WText>(std::to_string(j.second.m_Size)));
-				pcargo_view->addWidget(std::make_unique<Wt::WBreak>());	
-			}
+		// 	pcargo_view->addWidget(std::make_unique<Wt::WPushButton>(L"back"))->clicked().connect([=](){
+		// 		pcargo_view->hide();
+		// 		m_pIndex->show();
+		// 					});	//back button
+		// 	pcargo_view->addWidget(std::make_unique<Wt::WText>(i.first));		//shop name
+		// 	pcargo_view->addWidget(std::make_unique<Wt::WBreak>());
+		// 	for(auto& j:i.second.m_Content)
+		// 	{
+		// 		pcargo_view->addWidget(std::make_unique<Wt::WText>(j.first));
+		// 		pcargo_view->addWidget(std::make_unique<Wt::WText>(std::to_string(j.second.m_Size)));
+		// 		pcargo_view->addWidget(std::make_unique<Wt::WBreak>());	
+		// 	}
 			
-			pcargo_view->hide();
-		}
-		auto pnshop=m_pIndex->addWidget(std::make_unique<Wt::WLineEdit>(L"添加店铺"));	
-		m_pIndex->addWidget(std::make_unique<Wt::WPushButton>(L"Submit"))->clicked().connect(
-		[&,this,pnshop](){
-			m_Content.m_Content.insert(std::make_pair(pnshop->text().toUTF8(),Shop()));
-			//todo refresh
-		}
-		);
+		// 	pcargo_view->hide();
+		// }
+		// auto pnshop=m_pIndex->addWidget(std::make_unique<Wt::WLineEdit>(L"添加店铺"));	
+		// m_pIndex->addWidget(std::make_unique<Wt::WPushButton>(L"Submit"))->clicked().connect(
+		// [&,this,pnshop](){
+		// 	m_Content.m_Content.insert(std::make_pair(pnshop->text().toUTF8(),Shop()));
+		// 	//todo refresh
+		// }
+		// );
 	});	
+}
+
+void ShopView::RefreshIndex()
+{
+	m_pIndex->children().clear();
+	for(auto& i:m_Content.m_Content)
+	{
+		m_pIndex->addNew<Wt::WText>(i.first);
+		m_pIndex->addNew<Wt::WBreak>();
+	}
+
+	auto perror=m_pIndex->addNew<Wt::WText>();
+	perror->hide();
+
+	m_pIndex->addNew<Wt::WBreak>();
+
+	auto pnline=m_pIndex->addNew<Wt::WLineEdit>();
+	pnline->setPlaceholderText("the shop you want to create");
+	pnline->enterPressed().connect(
+		[&,this](){
+			auto iter=this->m_Content.m_Content.find(pnline->text().toUTF8());
+			if(iter!=this->m_Content.m_Content.end())
+			{
+				perror->setText(L"不能重复添加商铺");
+				perror->show();
+			}
+			else
+			{
+				this->m_Content.m_Content.insert(std::make_pair(pnline->text().toUTF8(),Shop()));
+				this->RefreshIndex();
+			}
+		}
+	);
+
+	m_pIndex->addNew<Wt::WBreak>();
+
+	auto pdline=m_pIndex->addNew<Wt::WLineEdit>();
+	pdline->setPlaceholderText("the shop you want to delete");
+	pdline->enterPressed().connect(
+		[&,this](){
+			auto iter=this->m_Content.m_Content.find(pnline->text().toUTF8());
+			if(iter==this->m_Content.m_Content.end())
+			{
+				perror->setText(L" 没有该商铺");
+				perror->show();
+			}
+			else
+			{
+				this->m_Content.m_Content.erase(this->m_Content.m_Content.find(pdline->text().toUTF8()));
+				this->RefreshIndex();
+			}
+		}
+	);
 }

@@ -56,6 +56,9 @@ class ShopView:public Wt::WContainerWidget
 public:
 	ShopView(MainApplication& app);
 private:
+	void RefreshIndex();
+	void RefreshShop(Wt::WContainerWidget* pc,const Wt::WString& shop_name,const std::map<Wt::WString,size_t>& cargos);
+
 	ShopManager m_Content;
 
 	MainApplication& m_Application;
