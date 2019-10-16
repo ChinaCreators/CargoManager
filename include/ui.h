@@ -57,14 +57,14 @@ public:
 	ShopView(MainApplication& app);
 private:
 	void RefreshIndex();
-	void RefreshShop(Wt::WContainerWidget* pc,const Wt::WString& shop_name,const std::map<Wt::WString,size_t>& cargos);
+	void RefreshShop(const Wt::WString& shop_name,const std::map<std::string,Cargo>& cargos);
 
 	ShopManager m_Content;
 
 	MainApplication& m_Application;
 
 	Wt::WContainerWidget* m_pIndex;
-	std::map<Wt::WString,Wt::WContainerWidget*> m_Shops;
+	Wt::WContainerWidget* m_pShop;
 	Wt::WText* m_pError;
 };
 

@@ -132,42 +132,9 @@ ShopView::ShopView(MainApplication& app)
 		m_Content.Init(name.toUTF8());
 		m_pError->hide();
 		m_pIndex=addWidget(std::make_unique<Wt::WContainerWidget>());
+		m_pShop=addWidget(std::make_unique<Wt::WContainerWidget>());
+		m_pShop->hide();
 		RefreshIndex();
-		// for(auto& i:m_Content.m_Content)
-		// {
-		// 	auto pindex_item=m_pIndex->addWidget(std::make_unique<Wt::WText>(i.first));
-		// 	m_pIndex->addWidget(std::make_unique<Wt::WBreak>());
-		// 	auto pcargo_view=addWidget(std::make_unique<Wt::WContainerWidget>());
-
-		// 	pindex_item->clicked().connect([=](){
-		// 		m_pIndex->hide();
-		// 		pcargo_view->show();
-		// 	});
-
-		// 	m_Shops.insert(std::make_pair(i.first,pcargo_view));
-		
-		// 	pcargo_view->addWidget(std::make_unique<Wt::WPushButton>(L"back"))->clicked().connect([=](){
-		// 		pcargo_view->hide();
-		// 		m_pIndex->show();
-		// 					});	//back button
-		// 	pcargo_view->addWidget(std::make_unique<Wt::WText>(i.first));		//shop name
-		// 	pcargo_view->addWidget(std::make_unique<Wt::WBreak>());
-		// 	for(auto& j:i.second.m_Content)
-		// 	{
-		// 		pcargo_view->addWidget(std::make_unique<Wt::WText>(j.first));
-		// 		pcargo_view->addWidget(std::make_unique<Wt::WText>(std::to_string(j.second.m_Size)));
-		// 		pcargo_view->addWidget(std::make_unique<Wt::WBreak>());	
-		// 	}
-			
-		// 	pcargo_view->hide();
-		// }
-		// auto pnshop=m_pIndex->addWidget(std::make_unique<Wt::WLineEdit>(L"添加店铺"));	
-		// m_pIndex->addWidget(std::make_unique<Wt::WPushButton>(L"Submit"))->clicked().connect(
-		// [&,this,pnshop](){
-		// 	m_Content.m_Content.insert(std::make_pair(pnshop->text().toUTF8(),Shop()));
-		// 	//todo refresh
-		// }
-		// );
 	});	
 }
 
@@ -177,7 +144,11 @@ void ShopView::RefreshIndex()
 	m_pIndex=addNew<Wt::WContainerWidget>();
 	for(auto& i:m_Content.m_Content)
 	{
-		m_pIndex->addNew<Wt::WText>(i.first);
+		m_pIndex->addNew<Wt::WText>(i.first)->clicked().connect([=](){
+			this->RefreshShop(i.first,i.second.m_Content);
+			this->m_pIndex->hide();
+			this->m_pShop->show();
+		});
 		m_pIndex->addNew<Wt::WBreak>();
 	}
 
@@ -256,4 +227,15 @@ void ShopView::RefreshIndex()
 			}
 		}
 	);
+}
+
+void ShopView::RefreshShop(const Wt::WString& shop_name,const std::map<std::string,Cargo>& cargos)
+{
+	m_pShop->clear();
+
+	m_pShop->addNew<Wt::WPushButton>(L"Back")->clicked().connect([this](){
+		this->RefreshIndex();
+		m_pShop->hide();
+		m_pIndex->show();
+	});
 }
