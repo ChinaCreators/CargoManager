@@ -225,5 +225,5 @@ void ShopView::RefreshIndex()
 		}
 	);
 
-	buffer_ptr->children.clear();
+	buffer_ptr->children().clear();
 }
