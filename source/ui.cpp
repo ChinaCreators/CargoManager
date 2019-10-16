@@ -120,10 +120,52 @@ MainApplication::MainApplication(const Wt::WEnvironment& env)
 	m_pNavigation=root()->addWidget(std::make_unique<Navigation>());
 
 	m_pNavigation->AddTab(L"登录",std::make_unique<LoginView>(*this));
-	m_pNavigation->AddTab(L"商铺",std::make_unique<ShopView>());
+	m_pNavigation->AddTab(L"商铺",std::make_unique<ShopView>(*this));
 }
 
-ShopView::ShopView()
+ShopView::ShopView(MainApplication& app)
+		:m_Application(app)
 {
+	m_pError=addWidget(std::make_unique<Wt::WText>(L"请先登录"));
+	m_pIndex=nullptr;
+	m_Application.m_AccountServer.m_SignUpSignal.connect([this](const Wt::WString& name){
+		m_Content.Init(name.toUTF8());
+		m_pError->hide();
+		m_pIndex=addWidget(std::make_unique<Wt::WContainerWidget>());
+		for(auto& i:m_Content.m_Content)
+		{
+			auto pindex_item=m_pIndex->addWidget(std::make_unique<Wt::WText>(i.first));
+			m_pIndex->addWidget(std::make_unique<Wt::WBreak>());
+			auto pcargo_view=addWidget(std::make_unique<Wt::WContainerWidget>());
 
+			pindex_item->clicked().connect([=](){
+				m_pIndex->hide();
+				pcargo_view->show();
+			});
+
+			m_Shops.insert(std::make_pair(i.first,pcargo_view));
+		
+			pcargo_view->addWidget(std::make_unique<Wt::WPushButton>(L"back"))->clicked().connect([=](){
+				pcargo_view->hide();
+				m_pIndex->show();
+							});	//back button
+			pcargo_view->addWidget(std::make_unique<Wt::WText>(i.first));		//shop name
+			pcargo_view->addWidget(std::make_unique<Wt::WBreak>());
+			for(auto& j:i.second.m_Content)
+			{
+				pcargo_view->addWidget(std::make_unique<Wt::WText>(j.first));
+				pcargo_view->addWidget(std::make_unique<Wt::WText>(std::to_string(j.second.m_Size)));
+				pcargo_view->addWidget(std::make_unique<Wt::WBreak>());	
+			}
+			
+			pcargo_view->hide();
+		}
+		auto pnshop=m_pIndex->addWidget(std::make_unique<Wt::WLineEdit>(L"添加店铺"));	
+		m_pIndex->addWidget(std::make_unique<Wt::WPushButton>(L"Submit"))->clicked().connect(
+		[&,this,pnshop](){
+			m_Content.m_Content.insert(std::make_pair(pnshop->text().toUTF8(),Shop()));
+			//todo refresh
+		}
+		);
+	});	
 }

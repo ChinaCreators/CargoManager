@@ -54,7 +54,21 @@ private:
 class ShopView:public Wt::WContainerWidget
 {
 public:
-	ShopView();
+	ShopView(MainApplication& app);
+private:
+	ShopManager m_Content;
+
+	MainApplication& m_Application;
+
+	Wt::WContainerWidget* m_pIndex;
+	std::map<Wt::WString,Wt::WContainerWidget*> m_Shops;
+	Wt::WText* m_pError;
+};
+
+class CargoView:public Wt::WContainerWidget
+{
+public:
+	CargoView(std::map<std::string,Cargo>& content);
 private:
 };
 
@@ -62,10 +76,10 @@ class MainApplication:public Wt::WApplication
 {
 public:
 	MainApplication(const Wt::WEnvironment& env);
+	AccountServer m_AccountServer;
 
 	friend LoginView;
 private:
 	Wt::WString m_UserName;
-	AccountServer m_AccountServer;
 	Navigation* m_pNavigation;
 };

@@ -16,7 +16,7 @@ void AccountManager::LoadAccount()
 {
 	Wt::log("info")<<"load account";
 	m_File.open(sm_FileName,std::ios::in);
-	size_t size;
+	size_t size=0;
 	m_File>>size;
 	std::string name;
 	size_t hpwd;
@@ -77,9 +77,9 @@ AccountManager& AccountManager::GetInstance()
 	return g;
 }
 
-ShopManager::ShopManager(const std::string& user_name)
+ShopManager::ShopManager()
 {
-	m_FileName=user_name+".dat";
+	m_FileName="";
 	LoadShop();	
 }
 
@@ -88,11 +88,16 @@ ShopManager::~ShopManager()
 	SaveShop();
 }
 
+void ShopManager::Init(const std::string& name)
+{
+	m_FileName=name+".dat";
+}
+
 void ShopManager::LoadShop()
 {
 	m_File.open(m_FileName,std::ios::in);
 
-	size_t size;
+	size_t size=0;
 	m_File>>size;
 	for(int i=0;i<size;i++)
 	{
@@ -131,13 +136,3 @@ void ShopManager::SaveShop()
 	m_File.close();
 }
 
-Shop& ShopManager::GetShop(const std::string& name)
-{
-	auto iter=m_Content.find(name);
-	if(iter==m_Content.end())
-		m_ErrorHappenedSignal.emit(L"没有该店铺");
-	else
-	{
-		return iter->second;
-	}
-}

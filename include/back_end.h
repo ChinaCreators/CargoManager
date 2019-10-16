@@ -60,17 +60,17 @@ struct Shop
 class ShopManager:public Wt::WObject
 {
 public:
-	ShopManager(const std::string& user_name);
+	ShopManager();
 	~ShopManager();
 
-	Shop& GetShop(const std::string& name);
+	void Init(const std::string& name);
 private:
 	void LoadShop();
 	void SaveShop();
 
 	std::string m_FileName;
 	std::fstream m_File;
-
+public:
 	std::map<std::string,Shop> m_Content;
 
 	Wt::Signal<Wt::WString> m_ErrorHappenedSignal;
