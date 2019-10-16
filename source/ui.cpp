@@ -56,7 +56,6 @@ LoginView::LoginView(MainApplication& app)
 	:m_Application(app)
 {
 	setContentAlignment(Wt::AlignmentFlag::Center);
-	setVerticalAlignment(Wt::AlignmentFlag::Center);
 	addStyleClass("login_view");
 
 	m_pError=nullptr;
@@ -111,6 +110,7 @@ MainApplication::MainApplication(const Wt::WEnvironment& env)
 {
 	setTitle("CargoManager");
 	useStyleSheet("./resources/main.css");
+	setLocale(Wt::WLocale::currentLocale());
 
 	m_AccountServer.m_SignUpSignal.connect([this](const Wt::WString& name){
 		m_UserName=name;
@@ -173,8 +173,7 @@ ShopView::ShopView(MainApplication& app)
 
 void ShopView::RefreshIndex()
 {
-	auto buffer_ptr=m_pIndex;
-	buffer_ptr->hide();
+	m_pIndex->clear();
 	m_pIndex=addNew<Wt::WContainerWidget>();
 	for(auto& i:m_Content.m_Content)
 	{
@@ -190,7 +189,7 @@ void ShopView::RefreshIndex()
 	auto pnline=m_pIndex->addNew<Wt::WLineEdit>();
 	pnline->setPlaceholderText("the shop you want to create");
 	pnline->enterPressed().connect(
-		[&,this](){
+		[=](){
 			auto iter=this->m_Content.m_Content.find(pnline->text().toUTF8());
 			if(iter!=this->m_Content.m_Content.end())
 			{
@@ -200,18 +199,18 @@ void ShopView::RefreshIndex()
 			else
 			{
 				this->m_Content.m_Content.insert(std::make_pair(pnline->text().toUTF8(),Shop()));
+				m_Content.SaveShop();
 				this->RefreshIndex();
 			}
 		}
 	);
 
 	m_pIndex->addNew<Wt::WBreak>();
-
 	auto pdline=m_pIndex->addNew<Wt::WLineEdit>();
 	pdline->setPlaceholderText("the shop you want to delete");
 	pdline->enterPressed().connect(
-		[&,this](){
-			auto iter=this->m_Content.m_Content.find(pnline->text().toUTF8());
+		[=](){
+			auto iter=this->m_Content.m_Content.find(pdline->text().toUTF8());
 			if(iter==this->m_Content.m_Content.end())
 			{
 				perror->setText(L" 没有该商铺");
@@ -219,11 +218,10 @@ void ShopView::RefreshIndex()
 			}
 			else
 			{
-				this->m_Content.m_Content.erase(this->m_Content.m_Content.find(pdline->text().toUTF8()));
+				this->m_Content.m_Content.erase(iter);
+				m_Content.SaveShop();
 				this->RefreshIndex();
 			}
 		}
 	);
-
-	buffer_ptr->children().clear();
 }

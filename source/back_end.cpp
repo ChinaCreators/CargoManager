@@ -30,7 +30,7 @@ void AccountManager::LoadAccount()
 
 void AccountManager::SaveAccount()
 {
-	Wt::log("info")<<"sace account";
+	Wt::log("info")<<"save account";
 	m_File.open(sm_FileName,std::ios::out);
 	m_File<<m_Content.size()<<std::endl;
 	for(auto& i:m_Content)
@@ -80,7 +80,6 @@ AccountManager& AccountManager::GetInstance()
 ShopManager::ShopManager()
 {
 	m_FileName="";
-	LoadShop();	
 }
 
 ShopManager::~ShopManager()
@@ -91,6 +90,7 @@ ShopManager::~ShopManager()
 void ShopManager::Init(const std::string& name)
 {
 	m_FileName=name+".dat";
+	LoadShop();
 }
 
 void ShopManager::LoadShop()
@@ -120,6 +120,9 @@ void ShopManager::LoadShop()
 
 void ShopManager::SaveShop()
 {
+	//log
+	Wt::log("info")<<"save shop";
+	//
 	m_File.open(m_FileName,std::ios::out);
 
 	m_File<<m_Content.size()<<std::endl;

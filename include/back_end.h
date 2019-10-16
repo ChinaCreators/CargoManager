@@ -64,10 +64,9 @@ public:
 	~ShopManager();
 
 	void Init(const std::string& name);
-private:
 	void LoadShop();
 	void SaveShop();
-
+private:
 	std::string m_FileName;
 	std::fstream m_File;
 public:
