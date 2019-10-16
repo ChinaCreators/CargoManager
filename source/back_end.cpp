@@ -14,6 +14,7 @@ AccountManager::~AccountManager()
 
 void AccountManager::LoadAccount()
 {
+	Wt::log("info")<<"load account";
 	m_File.open(sm_FileName,std::ios::in);
 	size_t size;
 	m_File>>size;
@@ -29,6 +30,7 @@ void AccountManager::LoadAccount()
 
 void AccountManager::SaveAccount()
 {
+	Wt::log("info")<<"sace account";
 	m_File.open(sm_FileName,std::ios::out);
 	m_File<<m_Content.size()<<std::endl;
 	for(auto& i:m_Content)
@@ -38,8 +40,9 @@ void AccountManager::SaveAccount()
 	m_File.close();
 }
 
-void AccountServer::SignUp(const std::string& name,std::string& pwd)
+void AccountServer::SignUp(const std::string& name,const std::string& pwd)
 {
+	Wt::log("info")<<"sign";
 	auto iter=AccountManager::GetInstance().m_Content.find(name);
 	if(iter!=AccountManager::GetInstance().m_Content.end())
 		m_ErrorHappenedSignal.emit(L"重复的账号名");
@@ -50,7 +53,7 @@ void AccountServer::SignUp(const std::string& name,std::string& pwd)
 	}
 }
 
-void AccountServer::SignIn(const std::string& name,std::string& pwd)
+void AccountServer::SignIn(const std::string& name,const std::string& pwd)
 {
 	auto iter=AccountManager::GetInstance().m_Content.find(name);
 	if(iter==AccountManager::GetInstance().m_Content.end())

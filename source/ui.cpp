@@ -41,9 +41,6 @@ void Navigation::AddTab(const Wt::WString& title,std::unique_ptr<Wt::WWidget>&& 
 		m_pActiveTab->addStyleClass("active_tab");
 		m_NewStyleClassesForTab=m_pActiveTab->styleClass();
 
-		//test
-		Wt::log("info")<<m_DefaultStyleClassesForTab<<" "<<m_NewStyleClassesForTab;
-		//
 		m_pActiveContent->show();
 	}
 	else
@@ -61,6 +58,8 @@ LoginView::LoginView(MainApplication& app)
 	setContentAlignment(Wt::AlignmentFlag::Center);
 	setVerticalAlignment(Wt::AlignmentFlag::Center);
 	addStyleClass("login_view");
+
+	m_pError=nullptr;
 	m_pUserNameNotify=addWidget(std::make_unique<Wt::WText>(L"用户名"));
 	m_pUserNameInput=addWidget(std::make_unique<Wt::WLineEdit>());
 	addWidget(std::make_unique<Wt::WBreak>());
@@ -69,12 +68,42 @@ LoginView::LoginView(MainApplication& app)
 	m_pPasswordInput->setAttributeValue("type","password");
 	addWidget(std::make_unique<Wt::WBreak>());
 	m_pSubmit=addWidget(std::make_unique<Wt::WPushButton>("Sign in"));
+
+	m_pSubmit->clicked().connect(this,&LoginView::Login);
+	m_pPasswordInput->enterPressed().connect(this,&LoginView::Login);
+	m_Application.m_AccountServer.m_SignUpSignal.connect(this,&LoginView::AfterLogin);
+	m_Application.m_AccountServer.m_ErrorHappenedSignal.connect(this,&LoginView::LoginError);
 }
 
 void LoginView::Login()
 {
 	std::string name=m_pUserNameInput->text().toUTF8();
 	std::string pwd=m_pPasswordInput->text().toUTF8();
+	m_Application.m_AccountServer.SignIn(name,pwd);
+}
+
+void LoginView::AfterLogin(const Wt::WString& name)
+{
+	m_pUserNameNotify->hide();
+	m_pPasswordNotify->hide();
+	m_pUserNameInput->hide();
+	m_pPasswordInput->hide();
+	m_pSubmit->hide();
+	if(m_pError)
+		m_pError->hide();
+	m_pUserName=addWidget(std::make_unique<Wt::WText>(L"当前用户:"+name));
+}
+
+void LoginView::LoginError(const Wt::WString& error)
+{
+	if(m_pError)
+	{
+		m_pError->setText(error);	
+	}
+	else
+	{
+		m_pError=addWidget(std::make_unique<Wt::WText>(error));
+	}
 }
 
 MainApplication::MainApplication(const Wt::WEnvironment& env)

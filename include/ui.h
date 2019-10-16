@@ -38,12 +38,17 @@ public:
 	LoginView(MainApplication& app);
 private:
 	void Login();
+	void AfterLogin(const Wt::WString& name);
+	void LoginError(const Wt::WString& error);
 
 	MainApplication& m_Application;
 
 	Wt::WText* m_pUserNameNotify,*m_pPasswordNotify;
 	Wt::WLineEdit *m_pUserNameInput,*m_pPasswordInput;
 	Wt::WPushButton* m_pSubmit;
+
+	Wt::WText* m_pError;
+	Wt::WText* m_pUserName;
 };
 
 class ShopView:public Wt::WContainerWidget
@@ -57,6 +62,8 @@ class MainApplication:public Wt::WApplication
 {
 public:
 	MainApplication(const Wt::WEnvironment& env);
+
+	friend LoginView;
 private:
 	Wt::WString m_UserName;
 	AccountServer m_AccountServer;

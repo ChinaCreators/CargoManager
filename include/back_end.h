@@ -7,6 +7,7 @@
 #include <Wt/WObject.h>
 #include <Wt/WSignal.h>
 #include <Wt/WString.h>
+#include <Wt/WLogger.h>
 
 struct Account
 {
@@ -17,8 +18,8 @@ struct Account
 class AccountServer:public Wt::WObject
 {
 public:
-	void SignUp(const std::string& name,std::string& pwd);
-	void SignIn(const std::string& name,std::string& pwd);
+	void SignUp(const std::string& name,const std::string& pwd);
+	void SignIn(const std::string& name,const std::string& pwd);
 
 	Wt::Signal<Wt::WString> m_ErrorHappenedSignal;
 	Wt::Signal<Wt::WString> m_SignUpSignal;
