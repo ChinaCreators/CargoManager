@@ -204,11 +204,43 @@ void ShopView::RefreshIndex()
 			}
 		}
 	);
-
+	m_pIndex->addNew<Wt::WPushButton>(L"Submit")->clicked().connect(
+		[=](){
+			auto iter=this->m_Content.m_Content.find(pnline->text().toUTF8());
+			if(iter!=this->m_Content.m_Content.end())
+			{
+				perror->setText(L"不能重复添加商铺");
+				perror->show();
+			}
+			else
+			{
+				this->m_Content.m_Content.insert(std::make_pair(pnline->text().toUTF8(),Shop()));
+				m_Content.SaveShop();
+				this->RefreshIndex();
+			}
+		}
+	);
 	m_pIndex->addNew<Wt::WBreak>();
+
 	auto pdline=m_pIndex->addNew<Wt::WLineEdit>();
 	pdline->setPlaceholderText("the shop you want to delete");
 	pdline->enterPressed().connect(
+		[=](){
+			auto iter=this->m_Content.m_Content.find(pdline->text().toUTF8());
+			if(iter==this->m_Content.m_Content.end())
+			{
+				perror->setText(L" 没有该商铺");
+				perror->show();
+			}
+			else
+			{
+				this->m_Content.m_Content.erase(iter);
+				m_Content.SaveShop();
+				this->RefreshIndex();
+			}
+		}
+	);
+	m_pIndex->addNew<Wt::WPushButton>(L"Submit")->clicked().connect(
 		[=](){
 			auto iter=this->m_Content.m_Content.find(pdline->text().toUTF8());
 			if(iter==this->m_Content.m_Content.end())
