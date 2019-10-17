@@ -248,7 +248,7 @@ void ShopView::RefreshShop(const Wt::WString& shop_name, std::map<std::string, C
 	pback->addStyleClass("shop_back_button");
 
 	auto pname = m_pShop->addNew<Wt::WText>(shop_name);
-	pname->addStyleClass("shop_name");
+	pname->addStyleClass("shop_text");
 	m_pShop->addNew<Wt::WBreak>();
 
 	for (auto& i : cargos)
@@ -349,10 +349,12 @@ CargoView::CargoView(ShopManager& manager)
 {
 	m_IsInit = false;
 	m_pError = addNew<Wt::WText>(L"请先登录");
+	m_pError->addStyleClass("error");
 	m_ShopManager.m_InitSingal.connect([this]() {
 		m_IsInit = true;
 		m_pError->hide();
 		m_pShop = addNew<Wt::WComboBox>();
+		m_pShop->addStyleClass("shop_select");
 		for (auto& i : m_ShopManager.m_Content)
 		{
 			m_pShop->addItem(i.first);
@@ -362,7 +364,11 @@ CargoView::CargoView(ShopManager& manager)
 		m_pSubmit = addNew<Wt::WPushButton>(L"提交");
 		m_pContent = addNew<Wt::WContainerWidget>();
 
-		m_pShop->activated().connect([this]() { this->m_pContent->clear(); });
+		m_pAdd->addStyleClass("cargo_add");
+		m_pSubmit->addStyleClass("cargo_submit");
+
+		m_pShop->activated()
+			.connect([this]() { this->m_pContent->clear(); });
 
 		m_pAdd->clicked().connect([this]() {
 			if (!IsInvalidString(m_pShop->valueText()))
@@ -370,12 +376,14 @@ CargoView::CargoView(ShopManager& manager)
 				std::string shop_name = m_pShop->valueText().toUTF8();
 				auto iter = this->m_ShopManager.m_Content.find(shop_name);
 				auto pcargo = m_pContent->addNew<Wt::WComboBox>();
+				pcargo->addStyleClass("cargo_select");
 				for (auto& i : iter->second.m_Content)
 				{
 					pcargo->addItem(i.first);
 				}
 				auto pinput = m_pContent->addNew<Wt::WLineEdit>();
 				pinput->setPlaceholderText(L"输入正负数以进出货物");
+				pinput->addStyleClass("cargo_size_input");
 				m_pContent->addNew<Wt::WBreak>();
 			}
 		});
