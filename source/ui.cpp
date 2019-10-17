@@ -28,9 +28,9 @@ Wt::WWidget* Navigation::AddTab(const Wt::WString& title,std::unique_ptr<Wt::WWi
 
 	auto _ptab=ptab.get();
 	auto _pcontent=ptr.get();
-	ptab->clicked().connect([=,&ptr](){
+	ptab->clicked().connect([=,ptr_=ptr.get()](){
 		this->SetActive(_ptab,_pcontent);
-		func(ptr.get());
+		func(ptr_);
 	});
 
 	if(m_pActiveTab==nullptr&&m_pActiveContent==nullptr)
