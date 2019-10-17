@@ -145,7 +145,7 @@ MainApplication::MainApplication(const Wt::WEnvironment& env)
 	m_pNavigation = root()->addWidget(std::make_unique<Navigation>());
 
 	m_pNavigation->AddTab(L"登录", std::make_unique<LoginView>(*this));
-	auto pshop = reinterpret_cast<ShopView*>(m_pNavigation->AddTab(L"商铺", std::make_unique<ShopView>(*this)));
+	auto pshop = reinterpret_cast<ShopView*>(m_pNavigation->AddTab(L"商铺", std::make_unique<ShopView>(*this)), [](Wt::WWidget* ptr) { reinterpret_cast<ShopView*>(ptr)->Refresh(); });
 	m_pNavigation->AddTab(L"货物", std::make_unique<CargoView>(pshop->m_Content), [](Wt::WWidget* ptr) { reinterpret_cast<CargoView*>(ptr)->Refresh(); });
 }
 
@@ -176,6 +176,7 @@ void ShopView::RefreshIndex()
 	for (auto& i : m_Content.m_Content)
 	{
 		m_pIndex->addNew<Wt::WText>(i.first)->clicked().connect([&, this]() {
+			m_CurrentShop = i.first;
 			this->RefreshShop(i.first, i.second.m_Content);
 			this->m_pIndex->hide();
 			this->m_pShop->show();
@@ -383,5 +384,16 @@ void CargoView::Refresh()
 		{
 			m_pShop->addItem(i.first);
 		}
+	}
+}
+
+void ShopView::Refresh()
+{
+	if (m_pIndex && m_pShop)
+	{
+		if (m_pIndex->isHidden())
+			RefreshShop(m_CurrentShop, m_Content.m_Content[m_CurrentShop.toUTF8()].m_Content);
+		else
+			RefreshIndex();
 	}
 }
