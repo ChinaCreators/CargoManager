@@ -74,7 +74,7 @@ LoginView::LoginView(MainApplication& app)
 	m_pPasswordInput->addStyleClass("login_input");
 	addWidget(std::make_unique<Wt::WBreak>());
 	m_pSubmit = addWidget(std::make_unique<Wt::WPushButton>("Sign in"));
-
+	m_pSubmit->addStyleClass("input_button");
 	m_pSubmit->clicked().connect(this, &LoginView::Login);
 	m_pPasswordInput->enterPressed().connect(this, &LoginView::Login);
 	m_Application.m_AccountServer.m_SignUpSignal.connect(this, &LoginView::AfterLogin);
@@ -107,6 +107,7 @@ void LoginView::LoginError(const Wt::WString& error)
 	else
 	{
 		m_pError = addWidget(std::make_unique<Wt::WText>(error));
+		m_pError->addStyleClass("error");
 	}
 }
 
@@ -133,6 +134,7 @@ ShopView::ShopView(MainApplication& app)
 	: m_Application(app)
 {
 	m_pError = addWidget(std::make_unique<Wt::WText>(L"请先登录"));
+	m_pError->addStyleClass("error");
 	m_pIndex = nullptr;
 	m_Application.m_AccountServer.m_SignUpSignal.connect([this](const Wt::WString& name) {
 		m_Content.Init(name.toUTF8());
