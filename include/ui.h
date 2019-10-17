@@ -98,7 +98,6 @@ class MainApplication : public Wt::WApplication
 {
 public:
 	MainApplication(const Wt::WEnvironment& env);
-	virtual ~MainApplication();
 	AccountServer m_AccountServer;
 
 	friend LoginView;

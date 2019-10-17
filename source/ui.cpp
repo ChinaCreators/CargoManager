@@ -1,4 +1,5 @@
 #include "ui.h"
+#include <thread>
 
 Navigation::Navigation()
 {
@@ -120,6 +121,18 @@ MainApplication::MainApplication(const Wt::WEnvironment& env)
 		m_UserName = name;
 		//todo add user name display
 	});
+
+	std::thread end_thread([this]() {
+		while (true)
+			if (this->hasQuit())
+			{
+				m_AccountServer.SignOut(this->m_UserName.toUTF8());
+				return;
+			}
+			else
+				std::this_thread::sleep_for(std::chrono::microseconds(3));
+	});
+	end_thread.detach();
 
 	m_pNavigation = root()->addWidget(std::make_unique<Navigation>());
 
@@ -391,9 +404,4 @@ void ShopView::Refresh()
 		else
 			RefreshIndex();
 	}
-}
-
-MainApplication::~MainApplication()
-{
-	m_AccountServer.SignOut(m_UserName.toUTF8());
 }
