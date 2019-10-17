@@ -142,6 +142,8 @@ ShopView::ShopView(MainApplication& app)
 		m_pError->hide();
 		m_pIndex = addWidget(std::make_unique<Wt::WContainerWidget>());
 		m_pShop = addWidget(std::make_unique<Wt::WContainerWidget>());
+		m_pIndex->setContentAlignment(Wt::AlignmentFlag::Center);
+		m_pShop->setContentAlignment(Wt::AlignmentFlag::Center);
 		m_pShop->hide();
 		RefreshIndex();
 	});
@@ -177,6 +179,7 @@ void ShopView::RefreshIndex()
 
 	auto pnline = m_pIndex->addNew<Wt::WLineEdit>();
 	pnline->setPlaceholderText(L"添加店铺");
+	pnline->addStyleClass("shop_input");
 	auto newfunc = [=]() {
 		if (IsInvalidString(pnline->text()))
 		{
@@ -198,11 +201,14 @@ void ShopView::RefreshIndex()
 		}
 	};
 	pnline->enterPressed().connect(newfunc);
-	m_pIndex->addNew<Wt::WPushButton>(L"Submit")->clicked().connect(newfunc);
+	auto pnbutton = m_pIndex->addNew<Wt::WPushButton>(L"Submit");
+	pnbutton->clicked().connect(newfunc);
+	pnbutton->addStyleClass("shop_button");
 	m_pIndex->addNew<Wt::WBreak>();
 
 	auto pdline = m_pIndex->addNew<Wt::WLineEdit>();
 	pdline->setPlaceholderText(L"删除店铺");
+	pdline->addStyleClass("shop_input");
 	auto deletefunc = [=]() {
 		if (IsInvalidString(pdline->text()))
 		{
@@ -224,7 +230,9 @@ void ShopView::RefreshIndex()
 		}
 	};
 	pdline->enterPressed().connect(deletefunc);
-	m_pIndex->addNew<Wt::WPushButton>(L"Submit")->clicked().connect(deletefunc);
+	auto pdbutton = m_pIndex->addNew<Wt::WPushButton>(L"Submit");
+	pdbutton->clicked().connect(deletefunc);
+	pdbutton->addStyleClass("shop_button");
 }
 
 void ShopView::RefreshShop(const Wt::WString& shop_name, std::map<std::string, Cargo>& cargos)

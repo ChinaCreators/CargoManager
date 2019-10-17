@@ -66,6 +66,34 @@
 
 .shop_text
 {
-
+	background: rgba(220,220,220,0.42);
+    border: none;
+    border-radius: 20px;
+    height: 150px;
+    width: 600px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    margin-left: 75px;
 }
 
+.shop_input
+{
+	border: none;
+    border-radius: 30px;
+    background: rgba(222,222,222,0.42);
+    font-size: 60px;
+    width: 600px;
+    height: 150px;
+    margin-left: 75px;
+}
+
+.shop_button
+{
+	border: none;
+    border-radius: 30px;
+    background: rgba(15,149,255,0.42);
+    width: 200px;
+    height: 150px;
+    font-size: 60px;
+    margin: 0 15px;
+}
