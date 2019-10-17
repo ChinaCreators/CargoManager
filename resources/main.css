@@ -75,6 +75,7 @@
     margin-bottom: 60px;
 	margin-left: 75px;
 	font-size:60px;
+	display: block;
 }
 
 .shop_input
@@ -97,4 +98,9 @@
     height: 150px;
     font-size: 60px;
     margin: 0 15px;
+}
+
+.shop_back_button
+{
+	
 }

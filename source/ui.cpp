@@ -239,11 +239,13 @@ void ShopView::RefreshShop(const Wt::WString& shop_name, std::map<std::string, C
 {
 	m_pShop->clear();
 
-	m_pShop->addNew<Wt::WPushButton>(L"Back")->clicked().connect([this]() {
+	auto pback = m_pShop->addNew<Wt::WPushButton>(L"Back");
+	pback->clicked().connect([this]() {
 		this->RefreshIndex();
 		m_pShop->hide();
 		m_pIndex->show();
 	});
+	pback->addStyleClass("shop_back_button");
 
 	m_pShop->addNew<Wt::WText>(shop_name);
 	m_pShop->addNew<Wt::WBreak>();
