@@ -240,23 +240,24 @@
 .cargo_select
 {
 	width: 240px;
-	height: 60px;
+	height: 68px;
 	font-size: 40px;
 	background-color: #CCCCCC;
 	border: none;
-	margin-top: 20px;
-	margin-left: 10px;
+	margin-top: 50px;
+	margin-left: 150px;
 }
 
 .cargo_size_input
 {
-	width: 120px;
+	width: 200px;
 	height: 60px;
 	font-size: 40px;
 	border: none;
 	margin-left: 10px;
 	background-color: #CCCCCC;
 	color: #ffffff;
+	margin-top: 50px;
 	padding-top: 6px;
 	padding-left: 5px;
 }
