@@ -161,9 +161,10 @@ void ShopView::RefreshIndex()
 	pnline->setPlaceholderText(L"添加店铺");
 	pnline->enterPressed().connect(
 		[=](){
+			Wt::log("info")<<pnline->text();
 			if(pnline->text().empty())
 			{
-				perror->setText(L"不能重复添加商铺");
+				perror->setText(L"不能为空");
 				perror->show();
 			}
 			auto iter=this->m_Content.m_Content.find(pnline->text().toUTF8());
@@ -184,7 +185,7 @@ void ShopView::RefreshIndex()
 		[=](){
 			if(pnline->text().empty())
 			{
-				perror->setText(L"不能重复添加商铺");
+				perror->setText(L"不能为空");
 				perror->show();
 			}
 			auto iter=this->m_Content.m_Content.find(pnline->text().toUTF8());
@@ -209,7 +210,7 @@ void ShopView::RefreshIndex()
 		[=](){
 			if(pdline->text().empty())
 			{
-				perror->setText(L"不能重复添加商铺");
+				perror->setText(L"不能为空");
 				perror->show();
 			}
 			auto iter=this->m_Content.m_Content.find(pdline->text().toUTF8());
@@ -230,7 +231,7 @@ void ShopView::RefreshIndex()
 		[=](){
 			if(pdline->text().empty())
 			{
-				perror->setText(L"不能重复添加商铺");
+				perror->setText(L"不能为空");
 				perror->show();
 			}
 			auto iter=this->m_Content.m_Content.find(pdline->text().toUTF8());
@@ -282,7 +283,7 @@ void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Car
 	auto newfunc=[=,&cargos](){
 		if(pnline->text().empty())
 		{
-			perror->setText(L"不能重复添加商铺");
+			perror->setText(L"不能为空");
 			perror->show();
 		}
 		auto iter=cargos.find(pnline->text().toUTF8());
@@ -310,7 +311,7 @@ void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Car
 	auto deletefunc=[=,&cargos](){
 		if(pdline->text().empty())
 		{
-			perror->setText(L"不能重复添加商铺");
+			perror->setText(L"不能为空");
 			perror->show();
 		}
 		auto iter=cargos.find(pdline->text().toUTF8());
