@@ -266,12 +266,15 @@ void ShopView::RefreshShop(const Wt::WString& shop_name, std::map<std::string, C
 	}
 
 	auto perror = m_pShop->addNew<Wt::WText>();
+	perror->addStyleClass("error");
 	perror->hide();
 	m_pShop->addNew<Wt::WBreak>();
 
 	auto pnline = m_pShop->addNew<Wt::WLineEdit>();
 	pnline->setPlaceholderText(L"想添加的货物类型");
+	pnline->addStyleClass("shop_input");
 	auto pnbutton = m_pShop->addNew<Wt::WPushButton>(L"Submit");
+	pnbutton->addStyleClass("shop_button");
 
 	auto newfunc = [=, &cargos]() {
 		if (IsInvalidString(pnline->text()))
@@ -299,8 +302,10 @@ void ShopView::RefreshShop(const Wt::WString& shop_name, std::map<std::string, C
 
 	m_pShop->addNew<Wt::WBreak>();
 	auto pdline = m_pShop->addNew<Wt::WLineEdit>();
+	pdline->addStyleClass("shop_input");
 	pdline->setPlaceholderText(L"想删除的货物类型");
 	auto pdbutton = m_pShop->addNew<Wt::WPushButton>(L"Submit");
+	pdbutton->addStyleClass("shop_button");
 
 	auto deletefunc = [=, &cargos]() {
 		if (IsInvalidString(pdline->text()))

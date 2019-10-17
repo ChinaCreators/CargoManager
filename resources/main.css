@@ -92,6 +92,8 @@
     width: 600px;
     height: 150px;
     margin-left: 75px;
+    margin-top: 15px;
+    margin-bottom: 30px;
 }
 
 .shop_button
@@ -102,7 +104,8 @@
     width: 200px;
     height: 150px;
     font-size: 60px;
-    margin: 0 15px;
+    margin-top: 15px;
+    margin-bottom: 30px;
 }
 
 .shop_back_button
