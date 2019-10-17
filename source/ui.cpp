@@ -144,7 +144,7 @@ void ShopView::RefreshIndex()
 	m_pIndex=addNew<Wt::WContainerWidget>();
 	for(auto& i:m_Content.m_Content)
 	{
-		m_pIndex->addNew<Wt::WText>(i.first)->clicked().connect([=](){
+		m_pIndex->addNew<Wt::WText>(i.first)->clicked().connect([&,this](){
 			this->RefreshShop(i.first,i.second.m_Content);
 			this->m_pIndex->hide();
 			this->m_pShop->show();
