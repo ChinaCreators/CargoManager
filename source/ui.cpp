@@ -342,6 +342,8 @@ CargoView::CargoView(ShopManager& manager)
 		m_pSubmit = addNew<Wt::WPushButton>(L"提交");
 		m_pContent = addNew<Wt::WContainerWidget>();
 
+		m_pShop->activated().connect([this]() { this->m_pContent->clear(); });
+
 		m_pAdd->clicked().connect([this]() {
 			if (!IsInvalidString(m_pShop->valueText()))
 			{
@@ -380,6 +382,7 @@ void CargoView::Refresh()
 	if (m_IsInit)
 	{
 		m_pShop->clear();
+		m_pContent->clear();
 		for (auto& i : m_ShopManager.m_Content)
 		{
 			m_pShop->addItem(i.first);
