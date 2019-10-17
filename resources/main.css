@@ -118,12 +118,27 @@
     width: 200px;
     height: 150px;
     font-size: 60px;
+    display: block;
+    margin-left: 75px;
+    margin-top: 15px;
+    margin-right: 0px;
 }
 
-/* .shop_name
+.shop_name
 {
-
-} */
+	background: rgba(220,220,220,0.42);
+    width: 600px;
+    height: 150px;
+    display: block;
+    border: none;
+    border-radius: 30px;
+    font-size: 60px;
+    text-align: center;
+    margin-left: 20px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    line-height: 130px;
+}
 
 .shop_cargo_name
 {
@@ -158,6 +173,16 @@
     border-radius: 30px;
     margin: 0 25px;
     color: white;
+}
+
+.shop_cargo_input
+{
+
+}
+
+.shop_cargo_button
+{
+
 }
 
 .shop_select

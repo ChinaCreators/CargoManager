@@ -248,7 +248,7 @@ void ShopView::RefreshShop(const Wt::WString& shop_name, std::map<std::string, C
 	pback->addStyleClass("shop_back_button");
 
 	auto pname = m_pShop->addNew<Wt::WText>(shop_name);
-	pname->addStyleClass("shop_text");
+	pname->addStyleClass("shop_name");
 	m_pShop->addNew<Wt::WBreak>();
 
 	for (auto& i : cargos)
@@ -272,9 +272,9 @@ void ShopView::RefreshShop(const Wt::WString& shop_name, std::map<std::string, C
 
 	auto pnline = m_pShop->addNew<Wt::WLineEdit>();
 	pnline->setPlaceholderText(L"想添加的货物类型");
-	pnline->addStyleClass("shop_input");
+	pnline->addStyleClass("shop_cargo_input");
 	auto pnbutton = m_pShop->addNew<Wt::WPushButton>(L"Submit");
-	pnbutton->addStyleClass("shop_button");
+	pnbutton->addStyleClass("shop_cargo_button");
 
 	auto newfunc = [=, &cargos]() {
 		if (IsInvalidString(pnline->text()))
