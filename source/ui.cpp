@@ -140,7 +140,7 @@ ShopView::ShopView(MainApplication& app)
 
 bool IsInvalidString(const Wt::WString& str)
 {
-	return str.empty()&&([&]()->bool{for(auto i :str.toUTF8()){if (i != ' ')return false;}return true;})();
+	return str.empty()||([&]()->bool{for(auto i :str.toUTF8()){if (i != ' ')return false;}return true;})()||str.toUTF8().empty();
 }
 
 void ShopView::RefreshIndex()
@@ -165,11 +165,11 @@ void ShopView::RefreshIndex()
 	auto pnline=m_pIndex->addNew<Wt::WLineEdit>();
 	pnline->setPlaceholderText(L"添加店铺");
 	auto newfunc=[=](){
-			Wt::log("info")<<pnline->text();
 			if(IsInvalidString(pnline->text()))
 			{
 				perror->setText(L"不能为空");
 				perror->show();
+				return;
 			}
 			auto iter=this->m_Content.m_Content.find(pnline->text().toUTF8());
 			if(iter!=this->m_Content.m_Content.end())
@@ -195,6 +195,7 @@ void ShopView::RefreshIndex()
 			{
 				perror->setText(L"不能为空");
 				perror->show();
+				return;
 			}
 			auto iter=this->m_Content.m_Content.find(pdline->text().toUTF8());
 			if(iter==this->m_Content.m_Content.end())
@@ -248,6 +249,7 @@ void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Car
 		{
 			perror->setText(L"不能为空");
 			perror->show();
+			return;
 		}
 		auto iter=cargos.find(pnline->text().toUTF8());
 		if(iter!=cargos.end())
@@ -276,6 +278,7 @@ void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Car
 		{
 			perror->setText(L"不能为空");
 			perror->show();
+			return;
 		}
 		auto iter=cargos.find(pdline->text().toUTF8());
 		if(iter==cargos.end())
