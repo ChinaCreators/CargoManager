@@ -326,10 +326,13 @@ void ShopView::RefreshShop(const Wt::WString& shop_name, std::map<std::string, C
 
 bool IsInvalidNumber(const Wt::WString& str)
 {
+	int cot = 0;
 	for (auto i : str.toUTF8())
 	{
 		if (i > '9' || i < '0')
-			return true;
+			if (cot != 0 || i != '-')
+				return true;
+		cot++;
 	}
 	return false;
 }
