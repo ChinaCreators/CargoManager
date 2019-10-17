@@ -100,11 +100,32 @@ void LoginView::LoginError(const Wt::WString& error)
 {
 	if(m_pError)
 	{
-		m_pError->setText(error);	
+		m_pError->setText(error);
 	}
 	else
 	{
 		m_pError=addWidget(std::make_unique<Wt::WText>(error));
+	}
+}
+
+bool LoginView::AvoidMultiLogin(const Wt::WString& name)
+{
+	std::fstream file(name.toUTF8()+".sgn",std::ios::in);
+	int sign=0;
+	file>>sign;
+	if(sign==1)
+	{
+		LoginError(L"不能同时登陆");
+		file.close();
+		return false;
+	}
+	else
+	{
+		file.close();
+		file.open(name.toUTF8()+".sgn",std::ios::out);
+		file<<1;
+		file.close();
+		return true;
 	}
 }
 

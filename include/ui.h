@@ -42,6 +42,7 @@ private:
 	void AfterLogin(const Wt::WString& name);
 	void LoginError(const Wt::WString& error);
 
+	bool AvoidMultiLogin(const Wt::WString& name);
 	MainApplication& m_Application;
 
 	Wt::WText* m_pUserNameNotify,*m_pPasswordNotify;
@@ -50,6 +51,8 @@ private:
 
 	Wt::WText* m_pError;
 	Wt::WText* m_pUserName;
+
+	Wt::WString m_UserName;
 };
 
 class ShopView:public Wt::WContainerWidget
