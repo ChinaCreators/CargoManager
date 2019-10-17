@@ -161,6 +161,11 @@ void ShopView::RefreshIndex()
 	pnline->setPlaceholderText(L"添加店铺");
 	pnline->enterPressed().connect(
 		[=](){
+			if(pnline->text().empty())
+			{
+				perror->setText(L"不能重复添加商铺");
+				perror->show();
+			}
 			auto iter=this->m_Content.m_Content.find(pnline->text().toUTF8());
 			if(iter!=this->m_Content.m_Content.end())
 			{
@@ -177,6 +182,11 @@ void ShopView::RefreshIndex()
 	);
 	m_pIndex->addNew<Wt::WPushButton>(L"Submit")->clicked().connect(
 		[=](){
+			if(pnline->text().empty())
+			{
+				perror->setText(L"不能重复添加商铺");
+				perror->show();
+			}
 			auto iter=this->m_Content.m_Content.find(pnline->text().toUTF8());
 			if(iter!=this->m_Content.m_Content.end())
 			{
@@ -197,6 +207,11 @@ void ShopView::RefreshIndex()
 	pdline->setPlaceholderText(L"删除店铺");
 	pdline->enterPressed().connect(
 		[=](){
+			if(pdline->text().empty())
+			{
+				perror->setText(L"不能重复添加商铺");
+				perror->show();
+			}
 			auto iter=this->m_Content.m_Content.find(pdline->text().toUTF8());
 			if(iter==this->m_Content.m_Content.end())
 			{
@@ -213,6 +228,11 @@ void ShopView::RefreshIndex()
 	);
 	m_pIndex->addNew<Wt::WPushButton>(L"Submit")->clicked().connect(
 		[=](){
+			if(pdline->text().empty())
+			{
+				perror->setText(L"不能重复添加商铺");
+				perror->show();
+			}
 			auto iter=this->m_Content.m_Content.find(pdline->text().toUTF8());
 			if(iter==this->m_Content.m_Content.end())
 			{
@@ -260,6 +280,11 @@ void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Car
 	auto pnbutton=m_pShop->addNew<Wt::WPushButton>(L"Submit");
 	
 	auto newfunc=[=,&cargos](){
+		if(pnline->text().empty())
+		{
+			perror->setText(L"不能重复添加商铺");
+			perror->show();
+		}
 		auto iter=cargos.find(pnline->text().toUTF8());
 		if(iter!=cargos.end())
 		{
@@ -283,6 +308,11 @@ void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Car
 	auto pdbutton=m_pShop->addNew<Wt::WPushButton>(L"Submit");
 
 	auto deletefunc=[=,&cargos](){
+		if(pdline->text().empty())
+		{
+			perror->setText(L"不能重复添加商铺");
+			perror->show();
+		}
 		auto iter=cargos.find(pdline->text().toUTF8());
 		if(iter==cargos.end())
 		{
