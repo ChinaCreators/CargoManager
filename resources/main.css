@@ -187,7 +187,17 @@
 
 .shop_select
 {
-
+	width: 240px;
+	height: 90px;
+	font-size: 45px;
+	font-weight: bold;
+	float: left;
+	background-color: #CCCCCC;
+    padding-left: 6px;
+    margin-top: 20px;
+    margin-left: 10px;
+    outline: none;
+    border: none;
 }
 
 .cargo_add
