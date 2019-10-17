@@ -133,8 +133,6 @@ ShopView::ShopView(MainApplication& app)
 		m_pError->hide();
 		m_pIndex=addWidget(std::make_unique<Wt::WContainerWidget>());
 		m_pShop=addWidget(std::make_unique<Wt::WContainerWidget>());
-		m_pIndex->setContentAlignment(Wt::AlignmentFlag::Center);
-		m_pShop->setContentAlignment(Wt::AlignmentFlag::Center);
 		m_pShop->hide();
 		RefreshIndex();
 	});	
