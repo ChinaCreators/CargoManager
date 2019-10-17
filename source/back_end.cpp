@@ -63,20 +63,14 @@ void AccountServer::SignIn(const std::string& name, const std::string& pwd)
 	{
 		if (std::hash<std::string>{}(pwd) == iter->second.m_HashedPassword)
 		{
-			std::fstream file(name + ".sgn", std::ios::in);
-			int sign = 0;
-			file >> sign;
-			if (sign == 1)
+			
+			if (AccountManager::GetInstance().m_AccountStatus.find(name)!=AccountManager::GetInstance().m_AccountStatus.end())
 			{
 				m_ErrorHappenedSignal.emit(L"不能同时登陆");
-				file.close();
 			}
 			else
 			{
-				file.close();
-				file.open(name + ".sgn", std::ios::out);
-				file << 1;
-				file.close();
+				AccountManager::GetInstance().m_AccountStatus.insert(name);
 				m_SignUpSignal.emit(Wt::WString(name));
 			}
 		}
@@ -89,12 +83,7 @@ void AccountServer::SignIn(const std::string& name, const std::string& pwd)
 
 void AccountServer::SignOut(const std::string& name)
 {
-	if (!name.empty())
-	{
-		std::fstream file(name + ".sgn", std::ios::out);
-		file << 0;
-		file.close();
-	}
+	AccountManager::GetInstance().m_AccountStatus.erase(name);
 }
 
 AccountManager& AccountManager::GetInstance()

@@ -8,6 +8,7 @@
 #include <Wt/WSignal.h>
 #include <Wt/WString.h>
 #include <Wt/WLogger.h>
+#include <set>
 
 struct Account
 {
@@ -45,6 +46,8 @@ private:
 
 	std::fstream m_File;
 	std::map<std::string, Account> m_Content;
+
+	std::set<std::string> m_AccountStatus;
 };
 
 struct Cargo
