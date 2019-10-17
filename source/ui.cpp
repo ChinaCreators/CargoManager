@@ -96,7 +96,7 @@ void LoginView::AfterLogin(const Wt::WString& name)
 	if (m_pError)
 		m_pError->hide();
 	m_pUserName = addWidget(std::make_unique<Wt::WText>(L"当前用户:" + name));
-	m_pUserName->addStyleClass("user_name")
+	m_pUserName->addStyleClass("user_name");
 }
 
 void LoginView::LoginError(const Wt::WString& error)
