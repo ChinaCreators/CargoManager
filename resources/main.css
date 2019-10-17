@@ -53,7 +53,12 @@
 
 .user_name
 {
-
+	display: block;
+	font-size: 52px;
+	color: #887B77;
+	font-weight: bold;
+	text-align: center;
+	margin-top: 10px;
 }
 
 .error
@@ -69,8 +74,8 @@
 	background: rgba(220,220,220,0.42);
     border: none;
     border-radius: 20px;
-    min-height: 150px;
-    min-width: 600px;
+    height: 150px;
+    width: 600px;
     margin-top: 60px;
     margin-bottom: 60px;
 	margin-left: 75px;
@@ -102,5 +107,30 @@
 
 .shop_back_button
 {
-	
+	border: none;
+    border-radius: 30px;
+    background: rgba(15,149,255,0.42);
+    width: 200px;
+    height: 150px;
+    font-size: 60px;
+}
+
+.shop_name
+{
+
+}
+
+.shop_cargo_name
+{
+
+}
+
+.shop_cargo_size
+{
+
+}
+
+.shop_cargo_notice
+{
+
 }

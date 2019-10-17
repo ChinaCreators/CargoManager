@@ -247,15 +247,21 @@ void ShopView::RefreshShop(const Wt::WString& shop_name, std::map<std::string, C
 	});
 	pback->addStyleClass("shop_back_button");
 
-	m_pShop->addNew<Wt::WText>(shop_name);
+	auto pname = m_pShop->addNew<Wt::WText>(shop_name);
+	pname->addStyleClass("shop_name");
 	m_pShop->addNew<Wt::WBreak>();
 
 	for (auto& i : cargos)
 	{
-		m_pShop->addNew<Wt::WText>(i.first);
-		m_pShop->addNew<Wt::WText>(std::to_string(i.second.m_Size));
+		auto pcn = m_pShop->addNew<Wt::WText>(i.first);
+		pcn->addStyleClass("shop_cargo_name");
+		auto pcs = m_pShop->addNew<Wt::WText>(std::to_string(i.second.m_Size));
+		pcs->addStyleClass("shop_cargo_size");
 		if (i.second.m_Size < 5)
-			m_pShop->addNew<Wt::WText>(L"需要进货");
+		{
+			auto pcn = m_pShop->addNew<Wt::WText>(L"需要进货");
+			pcn->addStyleClass("shop_cargo_notice");
+		}
 		m_pShop->addNew<Wt::WBreak>();
 	}
 
