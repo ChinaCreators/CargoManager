@@ -150,12 +150,13 @@
     width: 200px;
     height: 100px;
     border: none;
+    text-align: center;
     border-radius: 30px;
     margin-left:75px;
     margin-right: 25px;
-    display: block;
     margin-top: 25px;
     margin-bottom: 25px;
+    display: inline-block;
 }
 
 .shop_cargo_size
@@ -167,7 +168,8 @@
     border: none;
     border-radius: 30px;
     margin: 25px 25px;
-    display: block;
+    display: inline-block;
+    text-align: center;
 }
 
 .shop_cargo_notice
@@ -180,7 +182,8 @@
     border-radius: 30px;
     margin: 25px 25px;
     color: white;
-    display: block;
+    display: inline-block;
+    text-align: center;
 }
 
 /* .shop_cargo_input
@@ -236,10 +239,24 @@
 
 .cargo_select
 {
-
+	width: 240px;
+	height: 60px;
+	font-size: 40px;
+	background-color: #CCCCCC;
+	border: none;
+	margin-top: 20px;
+	margin-left: 10px;
 }
 
 .cargo_size_input
 {
-
+	width: 120px;
+	height: 60px;
+	font-size: 40px;
+	border: none;
+	margin-left: 10px;
+	background-color: #CCCCCC;
+	color: #ffffff;
+	padding-top: 6px;
+	padding-left: 5px;
 }
