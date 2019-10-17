@@ -145,7 +145,7 @@ MainApplication::MainApplication(const Wt::WEnvironment& env)
 	m_pNavigation = root()->addWidget(std::make_unique<Navigation>());
 
 	m_pNavigation->AddTab(L"登录", std::make_unique<LoginView>(*this));
-	auto pshop = reinterpret_cast<ShopView*>(m_pNavigation->AddTab(L"商铺", std::make_unique<ShopView>(*this)), [](Wt::WWidget* ptr) { reinterpret_cast<ShopView*>(ptr)->Refresh(); });
+	auto pshop = reinterpret_cast<ShopView*>(m_pNavigation->AddTab(L"商铺", std::make_unique<ShopView>(*this), [](Wt::WWidget* ptr) { reinterpret_cast<ShopView*>(ptr)->Refresh(); }));
 	m_pNavigation->AddTab(L"货物", std::make_unique<CargoView>(pshop->m_Content), [](Wt::WWidget* ptr) { reinterpret_cast<CargoView*>(ptr)->Refresh(); });
 }
 
