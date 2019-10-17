@@ -72,15 +72,17 @@
 .shop_text
 {
 	background: rgba(220,220,220,0.42);
-    border: none;
-    border-radius: 20px;
-    height: 150px;
     width: 600px;
-    margin-top: 60px;
-    margin-bottom: 60px;
-	margin-left: 75px;
-	font-size:60px;
-	display: block;
+    height: 150px;
+    display: block;
+    border: none;
+    border-radius: 30px;
+    font-size: 60px;
+    text-align: center;
+    margin-left: 80px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    line-height: 130px;
 }
 
 .shop_input
