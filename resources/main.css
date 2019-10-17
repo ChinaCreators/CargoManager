@@ -153,6 +153,9 @@
     border-radius: 30px;
     margin-left:75px;
     margin-right: 25px;
+    display: block;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
 .shop_cargo_size
@@ -163,7 +166,8 @@
     width: 100px;
     border: none;
     border-radius: 30px;
-    margin: 0 25px;
+    margin: 25px 25px;
+    display: block;
 }
 
 .shop_cargo_notice
@@ -174,8 +178,9 @@
     height: 100px;
     border: none;
     border-radius: 30px;
-    margin: 0 25px;
+    margin: 25px 25px;
     color: white;
+    display: block;
 }
 
 .shop_cargo_input
