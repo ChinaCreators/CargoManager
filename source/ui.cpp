@@ -164,8 +164,8 @@ void ShopView::RefreshIndex()
 
 	auto pnline=m_pIndex->addNew<Wt::WLineEdit>();
 	pnline->setPlaceholderText(L"添加店铺");
-	pnline->enterPressed().connect(
-		[=](){
+	auto newfunc=[=](){
+			Wt::log("info")<<pnline->text();
 			if(IsInvalidString(pnline->text()))
 			{
 				perror->setText(L"不能为空");
@@ -183,35 +183,14 @@ void ShopView::RefreshIndex()
 				m_Content.SaveShop();
 				this->RefreshIndex();
 			}
-		}
-	);
-	m_pIndex->addNew<Wt::WPushButton>(L"Submit")->clicked().connect(
-		[=](){
-			if(IsInvalidString(pnline->text()))
-			{
-				perror->setText(L"不能为空");
-				perror->show();
-			}
-			auto iter=this->m_Content.m_Content.find(pnline->text().toUTF8());
-			if(iter!=this->m_Content.m_Content.end())
-			{
-				perror->setText(L"不能重复添加商铺");
-				perror->show();
-			}
-			else
-			{
-				this->m_Content.m_Content.insert(std::make_pair(pnline->text().toUTF8(),Shop()));
-				m_Content.SaveShop();
-				this->RefreshIndex();
-			}
-		}
-	);
+		};
+	pnline->enterPressed().connect(newfunc);
+	m_pIndex->addNew<Wt::WPushButton>(L"Submit")->clicked().connect(newfunc);
 	m_pIndex->addNew<Wt::WBreak>();
 
 	auto pdline=m_pIndex->addNew<Wt::WLineEdit>();
 	pdline->setPlaceholderText(L"删除店铺");
-	pdline->enterPressed().connect(
-		[=](){
+	auto deletefunc=[=](){
 			if(IsInvalidString(pdline->text()))
 			{
 				perror->setText(L"不能为空");
@@ -229,29 +208,9 @@ void ShopView::RefreshIndex()
 				m_Content.SaveShop();
 				this->RefreshIndex();
 			}
-		}
-	);
-	m_pIndex->addNew<Wt::WPushButton>(L"Submit")->clicked().connect(
-		[=](){
-			if(IsInvalidString(pdline->text()))
-			{
-				perror->setText(L"不能为空");
-				perror->show();
-			}
-			auto iter=this->m_Content.m_Content.find(pdline->text().toUTF8());
-			if(iter==this->m_Content.m_Content.end())
-			{
-				perror->setText(L" 没有该商铺");
-				perror->show();
-			}
-			else
-			{
-				this->m_Content.m_Content.erase(iter);
-				m_Content.SaveShop();
-				this->RefreshIndex();
-			}
-		}
-	);
+		};
+	pdline->enterPressed().connect(deletefunc);
+	m_pIndex->addNew<Wt::WPushButton>(L"Submit")->clicked().connect(deletefunc);
 }
 
 void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Cargo>& cargos)
