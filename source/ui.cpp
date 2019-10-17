@@ -140,7 +140,7 @@ ShopView::ShopView(MainApplication& app)
 
 bool IsInvalidString(const Wt::WString& str)
 {
-	return str.empty()||([&]()->bool{for(auto i :str.toUTF8()){if (i != ' ')return false;}return true;})()||str.toUTF8().empty();
+	return str.empty()||([&]()->bool{for(auto i :str.toUTF8()){if (i != ' ')return false;}return true;})()||str.toUTF8().empty()||str.toUTF8().size()==0;
 }
 
 void ShopView::RefreshIndex()
