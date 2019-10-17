@@ -296,4 +296,6 @@ void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Car
 			this->RefreshShop(shop_name,cargos);
 		}
 	};
+	pdline->enterPressed().connect(deletefunc);
+	pdbutton->clicked().connect(deletefunc);
 }
