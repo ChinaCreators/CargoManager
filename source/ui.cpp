@@ -161,8 +161,7 @@ void ShopView::RefreshIndex()
 	pnline->setPlaceholderText(L"添加店铺");
 	pnline->enterPressed().connect(
 		[=](){
-			Wt::log("info")<<pnline->text();
-			if(pnline->text().empty())
+			if(pnline->text().empty()||pnline->text()==Wt::WString(""))
 			{
 				perror->setText(L"不能为空");
 				perror->show();
@@ -183,7 +182,7 @@ void ShopView::RefreshIndex()
 	);
 	m_pIndex->addNew<Wt::WPushButton>(L"Submit")->clicked().connect(
 		[=](){
-			if(pnline->text().empty())
+			if(pnline->text().empty()||pnline->text()==Wt::WString(""))
 			{
 				perror->setText(L"不能为空");
 				perror->show();
@@ -208,7 +207,7 @@ void ShopView::RefreshIndex()
 	pdline->setPlaceholderText(L"删除店铺");
 	pdline->enterPressed().connect(
 		[=](){
-			if(pdline->text().empty())
+			if(pdline->text().empty()||pdline->text()==Wt::WString(""))
 			{
 				perror->setText(L"不能为空");
 				perror->show();
@@ -229,7 +228,7 @@ void ShopView::RefreshIndex()
 	);
 	m_pIndex->addNew<Wt::WPushButton>(L"Submit")->clicked().connect(
 		[=](){
-			if(pdline->text().empty())
+			if(pdline->text().empty()||pdline->text()==Wt::WString(""))
 			{
 				perror->setText(L"不能为空");
 				perror->show();
@@ -281,7 +280,7 @@ void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Car
 	auto pnbutton=m_pShop->addNew<Wt::WPushButton>(L"Submit");
 	
 	auto newfunc=[=,&cargos](){
-		if(pnline->text().empty())
+		if(pnline->text().empty()||pnline->text()==Wt::WString(""))
 		{
 			perror->setText(L"不能为空");
 			perror->show();
@@ -309,7 +308,7 @@ void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Car
 	auto pdbutton=m_pShop->addNew<Wt::WPushButton>(L"Submit");
 
 	auto deletefunc=[=,&cargos](){
-		if(pdline->text().empty())
+		if(pdline->text().empty()||pdline->text()==Wt::WString(""))
 		{
 			perror->setText(L"不能为空");
 			perror->show();
