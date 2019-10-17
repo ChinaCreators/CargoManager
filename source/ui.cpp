@@ -268,6 +268,7 @@ void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Car
 		else
 		{
 			cargos.insert(std::make_pair(pnline->text().toUTF8(),Cargo{pnline->text().toUTF8(),0}));
+			m_Content.SaveShop();
 			this->RefreshShop(shop_name,cargos);
 		}
 	};
