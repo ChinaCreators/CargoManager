@@ -146,7 +146,8 @@ bool IsInvalidString(const Wt::WString& str)
 void ShopView::RefreshIndex()
 {
 	m_pIndex->clear();
-	m_pIndex=addNew<Wt::WContainerWidget>();
+	m_pIndex->setContentAlignment(Wt::AlignmentFlag::Center);
+	
 	for(auto& i:m_Content.m_Content)
 	{
 		m_pIndex->addNew<Wt::WText>(i.first)->clicked().connect([&,this](){
@@ -217,6 +218,7 @@ void ShopView::RefreshIndex()
 void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Cargo>& cargos)
 {
 	m_pShop->clear();
+	m_pIndex->setContentAlignment(Wt::AlignmentFlag::Center);
 
 	m_pShop->addNew<Wt::WPushButton>(L"Back")->clicked().connect([this](){
 		this->RefreshIndex();
