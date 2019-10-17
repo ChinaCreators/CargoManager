@@ -124,7 +124,7 @@ MainApplication::MainApplication(const Wt::WEnvironment& env)
 
 	m_pNavigation->AddTab(L"登录",std::make_unique<LoginView>(*this));
 	auto pshop=reinterpret_cast<ShopView*>(m_pNavigation->AddTab(L"商铺",std::make_unique<ShopView>(*this)));
-	m_pNavigation->AddTab(L"货物",std::make_unique<CargoView>(pshop->m_Content))
+	m_pNavigation->AddTab(L"货物",std::make_unique<CargoView>(pshop->m_Content));
 }
 
 ShopView::ShopView(MainApplication& app)
@@ -331,7 +331,7 @@ CargoView::CargoView(ShopManager& manager)
 		});
 
 		m_pSubmit->clicked().connect([this](){
-			auto& list=m_pContent->children();
+			std::vector<Wt::WWidget*> list=m_pContent->children();
 			for(int i=0;i<list.size();i+=3)
 			{
 				auto shop_name=m_pShop->currentText();
