@@ -64,13 +64,13 @@ void AccountServer::SignIn(const std::string& name, const std::string& pwd)
 		if (std::hash<std::string>{}(pwd) == iter->second.m_HashedPassword)
 		{
 			
-			if (AccountManager::GetInstance().m_AccountStatus.find(name)!=AccountManager::GetInstance().m_AccountStatus.end())
+		/*	if (AccountManager::GetInstance().m_AccountStatus.find(name)!=AccountManager::GetInstance().m_AccountStatus.end())
 			{
 				m_ErrorHappenedSignal.emit(L"不能同时登陆");
 			}
 			else
-			{
-				AccountManager::GetInstance().m_AccountStatus.insert(name);
+		*/	{
+			//	AccountManager::GetInstance().m_AccountStatus.insert(name);
 				m_SignUpSignal.emit(Wt::WString(name));
 			}
 		}
@@ -83,7 +83,7 @@ void AccountServer::SignIn(const std::string& name, const std::string& pwd)
 
 void AccountServer::SignOut(const std::string& name)
 {
-	AccountManager::GetInstance().m_AccountStatus.erase(name);
+	// AccountManager::GetInstance().m_AccountStatus.erase(name);
 }
 
 AccountManager& AccountManager::GetInstance()
