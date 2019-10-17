@@ -91,6 +91,7 @@ void ShopManager::Init(const std::string& name)
 {
 	m_FileName=name+".dat";
 	LoadShop();
+	m_InitSingal.emit();
 }
 
 void ShopManager::LoadShop()

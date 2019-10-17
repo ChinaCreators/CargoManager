@@ -19,7 +19,7 @@ void Navigation::SetActive(Wt::WWidget* ptab,Wt::WWidget* pcontent)
 	pcontent->show();
 }
 
-void Navigation::AddTab(const Wt::WString& title,std::unique_ptr<Wt::WWidget>&& ptr)
+Wt::WWidget* Navigation::AddTab(const Wt::WString& title,std::unique_ptr<Wt::WWidget>&& ptr)
 {
 	m_Content.insert(std::make_pair(title,ptr.get()));
 	
@@ -47,9 +47,12 @@ void Navigation::AddTab(const Wt::WString& title,std::unique_ptr<Wt::WWidget>&& 
 	{
 		ptr->hide();
 	}
-
+	
+	auto re=ptr.get();
 	addWidget(std::move(ptr));
 	m_pLayout->addWidget(std::move(ptab));
+
+	return re;
 }
 
 LoginView::LoginView(MainApplication& app)
@@ -120,7 +123,8 @@ MainApplication::MainApplication(const Wt::WEnvironment& env)
 	m_pNavigation=root()->addWidget(std::make_unique<Navigation>());
 
 	m_pNavigation->AddTab(L"登录",std::make_unique<LoginView>(*this));
-	m_pNavigation->AddTab(L"商铺",std::make_unique<ShopView>(*this));
+	auto pshop=reinterpret_cast<ShopView*>(m_pNavigation->AddTab(L"商铺",std::make_unique<ShopView>(*this)));
+	m_pNavigation->AddTab(L"货物",std::make_unique<CargoView>(pshop->m_Content))
 }
 
 ShopView::ShopView(MainApplication& app)
@@ -295,4 +299,47 @@ void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Car
 	};
 	pdline->enterPressed().connect(deletefunc);
 	pdbutton->clicked().connect(deletefunc);
+}
+
+CargoView::CargoView(ShopManager& manager)
+	:m_ShopManager(manager)
+{
+	m_pError=addNew<Wt::WText>(L"请先登录");
+	m_ShopManager.m_InitSingal.connect([this](){
+		m_pError->hide();
+		m_pShop=addNew<Wt::WComboBox>();
+		for(auto& i:m_ShopManager.m_Content)
+		{
+			m_pShop->addItem(i.first);
+		}
+
+		m_pAdd=addNew<Wt::WPushButton>(L"添加");
+		m_pSubmit=addNew<Wt::WPushButton>(L"提交");
+		m_pContent=addNew<Wt::WContainerWidget>();
+
+		m_pAdd->clicked().connect([this](){
+			std::string shop_name=m_pShop->valueText().toUTF8();
+			auto iter=this->m_ShopManager.m_Content.find(shop_name);
+			auto pcargo=m_pContent->addNew<Wt::WComboBox>();
+			for(auto& i:iter->second.m_Content)
+			{
+				pcargo->addItem(i.first);
+			}
+			auto pinput=m_pContent->addNew<Wt::WLineEdit>();
+			pinput->setPlaceholderText(L"输入正负数以进出货物");
+			m_pContent->addNew<Wt::WBreak>();
+		});
+
+		m_pSubmit->clicked().connect([this](){
+			auto& list=m_pContent->children();
+			for(int i=0;i<list.size();i+=3)
+			{
+				auto shop_name=m_pShop->currentText();
+				auto cargo_name=reinterpret_cast<Wt::WComboBox*>(list[i])->currentText();
+				auto cargo_change=std::stoi(reinterpret_cast<Wt::WLineEdit*>(list[i+1])->text().toUTF8());
+				m_ShopManager.m_Content[shop_name.toUTF8()].m_Content[cargo_name.toUTF8()].m_Size+=cargo_change;	
+			}
+			m_pContent->clear();
+		});
+	});
 }

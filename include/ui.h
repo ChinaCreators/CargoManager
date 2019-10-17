@@ -10,6 +10,7 @@
 #include <Wt/WHBoxLayout.h>
 #include <Wt/WTabWidget.h>
 #include <Wt/WMenuItem.h>
+#include <Wt/WComboBox.h>
 
 class MainApplication;
 
@@ -18,7 +19,7 @@ class Navigation:public Wt::WContainerWidget
 public:
 	Navigation();
 
-	void AddTab(const Wt::WString& title,std::unique_ptr<Wt::WWidget>&& ptr);
+	Wt::WWidget* AddTab(const Wt::WString& title,std::unique_ptr<Wt::WWidget>&& ptr);
 private:
 	void SetActive(Wt::WWidget* ptab,Wt::WWidget* pcontent);
 
@@ -55,11 +56,11 @@ class ShopView:public Wt::WContainerWidget
 {
 public:
 	ShopView(MainApplication& app);
+
+	ShopManager m_Content;
 private:
 	void RefreshIndex();
 	void RefreshShop(const Wt::WString& shop_name,std::map<std::string,Cargo>& cargos);
-
-	ShopManager m_Content;
 
 	MainApplication& m_Application;
 
@@ -71,8 +72,15 @@ private:
 class CargoView:public Wt::WContainerWidget
 {
 public:
-	CargoView(std::map<std::string,Cargo>& content);
+	CargoView(ShopManager& manager);
 private:
+	ShopManager& m_ShopManager;
+
+	Wt::WText* m_pError;
+	Wt::WComboBox* m_pShop;
+	Wt::WPushButton* m_pAdd;
+	Wt::WPushButton* m_pSubmit;
+	Wt::WContainerWidget* m_pContent;
 };
 
 class MainApplication:public Wt::WApplication

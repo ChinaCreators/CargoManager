@@ -66,6 +66,8 @@ public:
 	void Init(const std::string& name);
 	void LoadShop();
 	void SaveShop();
+
+	Wt::Signal<void> m_InitSingal;
 private:
 	std::string m_FileName;
 	std::fstream m_File;
