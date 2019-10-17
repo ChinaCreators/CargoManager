@@ -96,6 +96,7 @@ void LoginView::AfterLogin(const Wt::WString& name)
 	if (m_pError)
 		m_pError->hide();
 	m_pUserName = addWidget(std::make_unique<Wt::WText>(L"当前用户:" + name));
+	m_pUserName->addStyleClass("user_name")
 }
 
 void LoginView::LoginError(const Wt::WString& error)
@@ -157,16 +158,19 @@ void ShopView::RefreshIndex()
 
 	for (auto& i : m_Content.m_Content)
 	{
-		m_pIndex->addNew<Wt::WText>(i.first)->clicked().connect([&, this]() {
+		Wt::WText* pb = m_pIndex->addNew<Wt::WText>(i.first);
+		pb->clicked().connect([&, this]() {
 			m_CurrentShop = i.first;
 			this->RefreshShop(i.first, i.second.m_Content);
 			this->m_pIndex->hide();
 			this->m_pShop->show();
 		});
+		pb->addStyleClass("shop_text");
 		m_pIndex->addNew<Wt::WBreak>();
 	}
 
 	auto perror = m_pIndex->addNew<Wt::WText>();
+	perror->addStyleClass("error");
 	perror->hide();
 
 	m_pIndex->addNew<Wt::WBreak>();

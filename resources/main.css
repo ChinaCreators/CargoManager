@@ -24,7 +24,7 @@
     width: 700px;
     height: 400px;
     background: hsl(0, 0%, 96%);
-	margin:0 auto;
+	margin:120px auto;
 	padding-top: 20px;
 }
 
@@ -51,6 +51,11 @@
 	border-radius: 30px;
 }
 
+.user_name
+{
+
+}
+
 .error
 {
 	font-size: 50px;
@@ -58,3 +63,9 @@
 	display: block;
 	font-weight: bold;
 }
+
+.shop_text
+{
+
+}
+
