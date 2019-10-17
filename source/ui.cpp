@@ -324,6 +324,16 @@ void ShopView::RefreshShop(const Wt::WString& shop_name, std::map<std::string, C
 	pdbutton->clicked().connect(deletefunc);
 }
 
+bool IsInvalidNumber(const Wt::WString& str)
+{
+	for (auto i : str.toUTF8())
+	{
+		if (i > '9' || i < '0')
+			return true;
+	}
+	return false;
+}
+
 CargoView::CargoView(ShopManager& manager)
 	: m_ShopManager(manager)
 {
@@ -367,7 +377,7 @@ CargoView::CargoView(ShopManager& manager)
 				auto shop_name = m_pShop->currentText();
 				auto cargo_name = reinterpret_cast<Wt::WComboBox*>(list[i])->currentText();
 				int cargo_change = 0;
-				if (!IsInvalidString(reinterpret_cast<Wt::WLineEdit*>(list[i + 1])->text()))
+				if (!IsInvalidString(reinterpret_cast<Wt::WLineEdit*>(list[i + 1])->text()) && !IsInvalidNumber(reinterpret_cast<Wt::WLineEdit*>(list[i + 1])->text()))
 					cargo_change = std::stoi(reinterpret_cast<Wt::WLineEdit*>(list[i + 1])->text().toUTF8());
 				if (!IsInvalidString(shop_name) && !IsInvalidString(cargo_name))
 					m_ShopManager.m_Content[shop_name.toUTF8()].m_Content[cargo_name.toUTF8()].m_Size += cargo_change;
