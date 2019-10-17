@@ -95,7 +95,8 @@
     height: 150px;
     margin-left: 75px;
     margin-top: 15px;
-    margin-bottom: 30px;
+	margin-bottom: 30px;
+	text-align: center;
 }
 
 .shop_button
