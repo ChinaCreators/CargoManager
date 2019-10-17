@@ -358,7 +358,8 @@ CargoView::CargoView(ShopManager& manager)
 				auto shop_name=m_pShop->currentText();
 				auto cargo_name=reinterpret_cast<Wt::WComboBox*>(list[i])->currentText();
 				auto cargo_change=std::stoi(reinterpret_cast<Wt::WLineEdit*>(list[i+1])->text().toUTF8());
-				m_ShopManager.m_Content[shop_name.toUTF8()].m_Content[cargo_name.toUTF8()].m_Size+=cargo_change;	
+				if(IsInvalidString(shop_name))
+					m_ShopManager.m_Content[shop_name.toUTF8()].m_Content[cargo_name.toUTF8()].m_Size += cargo_change;
 			}
 			m_pContent->clear();
 		});
