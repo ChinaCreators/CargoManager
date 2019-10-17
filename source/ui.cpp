@@ -109,27 +109,6 @@ void LoginView::LoginError(const Wt::WString& error)
 	}
 }
 
-bool LoginView::AvoidMultiLogin(const Wt::WString& name)
-{
-	std::fstream file(name.toUTF8() + ".sgn", std::ios::in);
-	int sign = 0;
-	file >> sign;
-	if (sign == 1)
-	{
-		LoginError(L"不能同时登陆");
-		file.close();
-		return false;
-	}
-	else
-	{
-		file.close();
-		file.open(name.toUTF8() + ".sgn", std::ios::out);
-		file << 1;
-		file.close();
-		return true;
-	}
-}
-
 MainApplication::MainApplication(const Wt::WEnvironment& env)
 	: WApplication(env)
 {
@@ -412,4 +391,9 @@ void ShopView::Refresh()
 		else
 			RefreshIndex();
 	}
+}
+
+MainApplication::~MainApplication()
+{
+	m_AccountServer.SignOut(m_UserName.toUTF8());
 }

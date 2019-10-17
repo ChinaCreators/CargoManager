@@ -45,7 +45,6 @@ private:
 	void AfterLogin(const Wt::WString& name);
 	void LoginError(const Wt::WString& error);
 
-	bool AvoidMultiLogin(const Wt::WString& name);
 	MainApplication& m_Application;
 
 	Wt::WText *m_pUserNameNotify, *m_pPasswordNotify;
@@ -99,6 +98,7 @@ class MainApplication : public Wt::WApplication
 {
 public:
 	MainApplication(const Wt::WEnvironment& env);
+	virtual ~MainApplication();
 	AccountServer m_AccountServer;
 
 	friend LoginView;

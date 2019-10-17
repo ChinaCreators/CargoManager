@@ -15,17 +15,18 @@ struct Account
 	size_t m_HashedPassword;
 };
 
-class AccountServer:public Wt::WObject
+class AccountServer : public Wt::WObject
 {
 public:
-	void SignUp(const std::string& name,const std::string& pwd);
-	void SignIn(const std::string& name,const std::string& pwd);
+	void SignUp(const std::string& name, const std::string& pwd);
+	void SignIn(const std::string& name, const std::string& pwd);
+	void SignOut(const std::string& name);
 
 	Wt::Signal<Wt::WString> m_ErrorHappenedSignal;
 	Wt::Signal<Wt::WString> m_SignUpSignal;
 };
 
-class AccountManager:public Wt::WObject
+class AccountManager : public Wt::WObject
 {
 public:
 	friend AccountServer;
@@ -33,6 +34,7 @@ public:
 	~AccountManager();
 
 	static AccountManager& GetInstance();
+
 private:
 	AccountManager();
 
@@ -42,8 +44,7 @@ private:
 	static const std::string sm_FileName;
 
 	std::fstream m_File;
-	std::map<std::string,Account> m_Content;
-
+	std::map<std::string, Account> m_Content;
 };
 
 struct Cargo
@@ -54,10 +55,10 @@ struct Cargo
 
 struct Shop
 {
-	std::map<std::string,Cargo> m_Content;
+	std::map<std::string, Cargo> m_Content;
 };
 
-class ShopManager:public Wt::WObject
+class ShopManager : public Wt::WObject
 {
 public:
 	ShopManager();
@@ -68,11 +69,13 @@ public:
 	void SaveShop();
 
 	Wt::Signal<> m_InitSingal;
+
 private:
 	std::string m_FileName;
 	std::fstream m_File;
+
 public:
-	std::map<std::string,Shop> m_Content;
+	std::map<std::string, Shop> m_Content;
 
 	Wt::Signal<Wt::WString> m_ErrorHappenedSignal;
 };
