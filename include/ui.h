@@ -57,7 +57,7 @@ public:
 	ShopView(MainApplication& app);
 private:
 	void RefreshIndex();
-	void RefreshShop(const Wt::WString& shop_name,const std::map<std::string,Cargo>& cargos);
+	void RefreshShop(const Wt::WString& shop_name,std::map<std::string,Cargo>& cargos);
 
 	ShopManager m_Content;
 

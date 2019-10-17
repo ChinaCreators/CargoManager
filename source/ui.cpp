@@ -158,7 +158,7 @@ void ShopView::RefreshIndex()
 	m_pIndex->addNew<Wt::WBreak>();
 
 	auto pnline=m_pIndex->addNew<Wt::WLineEdit>();
-	pnline->setPlaceholderText("the shop you want to create");
+	pnline->setPlaceholderText(L"添加店铺");
 	pnline->enterPressed().connect(
 		[=](){
 			auto iter=this->m_Content.m_Content.find(pnline->text().toUTF8());
@@ -194,7 +194,7 @@ void ShopView::RefreshIndex()
 	m_pIndex->addNew<Wt::WBreak>();
 
 	auto pdline=m_pIndex->addNew<Wt::WLineEdit>();
-	pdline->setPlaceholderText("the shop you want to delete");
+	pdline->setPlaceholderText(L"删除店铺");
 	pdline->enterPressed().connect(
 		[=](){
 			auto iter=this->m_Content.m_Content.find(pdline->text().toUTF8());
@@ -229,7 +229,7 @@ void ShopView::RefreshIndex()
 	);
 }
 
-void ShopView::RefreshShop(const Wt::WString& shop_name,const std::map<std::string,Cargo>& cargos)
+void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Cargo>& cargos)
 {
 	m_pShop->clear();
 
@@ -238,4 +238,20 @@ void ShopView::RefreshShop(const Wt::WString& shop_name,const std::map<std::stri
 		m_pShop->hide();
 		m_pIndex->show();
 	});
+
+	for(auto& i:cargos)
+	{
+		m_pShop->addNew<Wt::WText>(i.first);
+		m_pShop->addNew<Wt::WText>(std::to_string(i.second.m_Size));
+		if(i.second.m_Size<5)
+			m_pShop->addNew<Wt::WText>(L"需要进货");
+		m_pShop->addNew<Wt::WBreak>();
+	}
+	auto pnline=m_pShop->addNew<Wt::WLineEdit>();
+	pnline->setPlaceholderText(L"想添加的货物类型");
+	auto pnbutton=m_pShop->addNew<Wt::WPushButton>(L"Submit");
+	
+	auto func=[=](){
+		
+	};
 }
