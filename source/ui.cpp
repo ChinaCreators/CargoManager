@@ -19,7 +19,7 @@ void Navigation::SetActive(Wt::WWidget* ptab,Wt::WWidget* pcontent)
 	pcontent->show();
 }
 
-Wt::WWidget* Navigation::AddTab(const Wt::WString& title,std::unique_ptr<Wt::WWidget>&& ptr)
+Wt::WWidget* Navigation::AddTab(const Wt::WString& title,std::unique_ptr<Wt::WWidget>&& ptr,std::function<void(Wt::WWidget*)> func)
 {
 	m_Content.insert(std::make_pair(title,ptr.get()));
 	
@@ -28,8 +28,9 @@ Wt::WWidget* Navigation::AddTab(const Wt::WString& title,std::unique_ptr<Wt::WWi
 
 	auto _ptab=ptab.get();
 	auto _pcontent=ptr.get();
-	ptab->clicked().connect([=](){
+	ptab->clicked().connect([=,&ptr](){
 		this->SetActive(_ptab,_pcontent);
+		func(ptr.get());
 	});
 
 	if(m_pActiveTab==nullptr&&m_pActiveContent==nullptr)
@@ -145,7 +146,7 @@ MainApplication::MainApplication(const Wt::WEnvironment& env)
 
 	m_pNavigation->AddTab(L"登录",std::make_unique<LoginView>(*this));
 	auto pshop=reinterpret_cast<ShopView*>(m_pNavigation->AddTab(L"商铺",std::make_unique<ShopView>(*this)));
-	m_pNavigation->AddTab(L"货物",std::make_unique<CargoView>(pshop->m_Content));
+	m_pNavigation->AddTab(L"货物",std::make_unique<CargoView>(pshop->m_Content),[](Wt::WWidget* ptr){reinterpret_cast<CargoView*>(ptr)->Refresh();});
 }
 
 ShopView::ShopView(MainApplication& app)
@@ -325,8 +326,10 @@ void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Car
 CargoView::CargoView(ShopManager& manager)
 	:m_ShopManager(manager)
 {
+	m_IsInit=false;
 	m_pError=addNew<Wt::WText>(L"请先登录");
 	m_ShopManager.m_InitSingal.connect([this](){
+		m_IsInit=true;
 		m_pError->hide();
 		m_pShop=addNew<Wt::WComboBox>();
 		for(auto& i:m_ShopManager.m_Content)
@@ -358,10 +361,22 @@ CargoView::CargoView(ShopManager& manager)
 				auto shop_name=m_pShop->currentText();
 				auto cargo_name=reinterpret_cast<Wt::WComboBox*>(list[i])->currentText();
 				auto cargo_change=std::stoi(reinterpret_cast<Wt::WLineEdit*>(list[i+1])->text().toUTF8());
-				if(IsInvalidString(shop_name))
+				if(!IsInvalidString(shop_name))
 					m_ShopManager.m_Content[shop_name.toUTF8()].m_Content[cargo_name.toUTF8()].m_Size += cargo_change;
 			}
 			m_pContent->clear();
 		});
 	});
+}
+
+void CargoView::Refresh()
+{
+	if(m_IsInit)
+	{
+		m_pShop->clear();
+		for(auto& i:m_ShopManager.m_Content)
+		{
+			m_pShop->addItem(i.first);
+		}
+	}
 }

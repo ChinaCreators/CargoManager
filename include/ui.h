@@ -19,7 +19,7 @@ class Navigation:public Wt::WContainerWidget
 public:
 	Navigation();
 
-	Wt::WWidget* AddTab(const Wt::WString& title,std::unique_ptr<Wt::WWidget>&& ptr);
+	Wt::WWidget* AddTab(const Wt::WString& title,std::unique_ptr<Wt::WWidget>&& ptr,std::function<void(Wt::WWidget*)> func=[](Wt::WWidget*){});
 private:
 	void SetActive(Wt::WWidget* ptab,Wt::WWidget* pcontent);
 
@@ -51,8 +51,6 @@ private:
 
 	Wt::WText* m_pError;
 	Wt::WText* m_pUserName;
-
-	Wt::WString m_UserName;
 };
 
 class ShopView:public Wt::WContainerWidget
@@ -76,7 +74,9 @@ class CargoView:public Wt::WContainerWidget
 {
 public:
 	CargoView(ShopManager& manager);
+	void Refresh();
 private:
+
 	ShopManager& m_ShopManager;
 
 	Wt::WText* m_pError;
@@ -84,6 +84,8 @@ private:
 	Wt::WPushButton* m_pAdd;
 	Wt::WPushButton* m_pSubmit;
 	Wt::WContainerWidget* m_pContent;
+
+	bool m_IsInit;
 };
 
 class MainApplication:public Wt::WApplication
