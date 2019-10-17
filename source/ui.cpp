@@ -254,6 +254,7 @@ void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Car
 	auto perror=m_pShop->addNew<Wt::WText>();
 	perror->hide();
 	m_pShop->addNew<Wt::WBreak>();
+
 	auto pnline=m_pShop->addNew<Wt::WLineEdit>();
 	pnline->setPlaceholderText(L"想添加的货物类型");
 	auto pnbutton=m_pShop->addNew<Wt::WPushButton>(L"Submit");
@@ -275,4 +276,24 @@ void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Car
 
 	pnline->enterPressed().connect(newfunc);
 	pnbutton->clicked().connect(newfunc);
+
+	m_pShop->addNew<Wt::WBreak>();
+	auto pdline=m_pShop->addNew<Wt::WLineEdit>();
+	pdline->setPlaceholderText(L"想删除的货物类型");
+	auto pdbutton=m_pShop->addNew<Wt::WPushButton>(L"Submit");
+
+	auto deletefunc=[=,&cargos](){
+		auto iter=cargos.find(pdline->text().toUTF8());
+		if(iter==cargos.end())
+		{
+			perror->setText(L"该种货物不存在");
+			perror->show();
+		}
+		else
+		{
+			cargos.erase(iter);
+			m_Content.SaveShop();
+			this->RefreshShop(shop_name,cargos);
+		}
+	};
 }
