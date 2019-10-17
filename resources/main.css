@@ -127,17 +127,37 @@
 
 .shop_cargo_name
 {
-
+	background: rgba(222,222,222,0.42);
+    font-size: 60px;
+    width: 200px;
+    height: 100px;
+    border: none;
+    border-radius: 30px;
+    margin-left:75px;
+    margin-right: 25px;
 }
 
 .shop_cargo_size
 {
-
+	background: rgba(222,222,222,0.42);
+    font-size: 60px;
+    height: 100px;
+    width: 100px;
+    border: none;
+    border-radius: 30px;
+    margin: 0 25px;
 }
 
 .shop_cargo_notice
 {
-
+	background: red;
+    font-size: 60px;
+    width: 300px;
+    height: 100px;
+    border: none;
+    border-radius: 30px;
+    margin: 0 25px;
+    color: white;
 }
 
 .shop_select
@@ -162,5 +182,5 @@
 
 .cargo_size_input
 {
-	
+
 }
