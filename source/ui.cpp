@@ -239,6 +239,9 @@ void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Car
 		m_pIndex->show();
 	});
 
+	m_pShop->addNew<Wt::WText>(shop_name);
+	m_pShop->addNew<Wt::WBreak>();
+
 	for(auto& i:cargos)
 	{
 		m_pShop->addNew<Wt::WText>(i.first);
@@ -247,11 +250,28 @@ void ShopView::RefreshShop(const Wt::WString& shop_name,std::map<std::string,Car
 			m_pShop->addNew<Wt::WText>(L"需要进货");
 		m_pShop->addNew<Wt::WBreak>();
 	}
+
+	auto perror=m_pShop->addNew<Wt::WText>();
+	perror->hide();
+	m_pShop->addNew<Wt::WBreak>();
 	auto pnline=m_pShop->addNew<Wt::WLineEdit>();
 	pnline->setPlaceholderText(L"想添加的货物类型");
 	auto pnbutton=m_pShop->addNew<Wt::WPushButton>(L"Submit");
 	
-	auto func=[=](){
-		
+	auto newfunc=[=,&cargos](){
+		auto iter=cargos.find(pnline->text().toUTF8());
+		if(iter!=cargos.end())
+		{
+			perror->setText(L"该种货物已存在");
+			perror->show();
+		}
+		else
+		{
+			cargos.insert(std::make_pair(pnline->text().toUTF8(),Cargo{pnline->text().toUTF8(),0}));
+			this->RefreshShop(shop_name,cargos);
+		}
 	};
+
+	pnline->enterPressed().connect(newfunc);
+	pnbutton->clicked().connect(newfunc);
 }
