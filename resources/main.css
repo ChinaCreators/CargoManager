@@ -69,8 +69,8 @@
 	background: rgba(220,220,220,0.42);
     border: none;
     border-radius: 20px;
-    height: 150px;
-    width: 600px;
+    min-height: 150px;
+    min-width: 600px;
     margin-top: 60px;
     margin-bottom: 60px;
 	margin-left: 75px;
