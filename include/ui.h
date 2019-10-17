@@ -47,7 +47,6 @@ private:
 
 	MainApplication& m_Application;
 
-	Wt::WText *m_pUserNameNotify, *m_pPasswordNotify;
 	Wt::WLineEdit *m_pUserNameInput, *m_pPasswordInput;
 	Wt::WPushButton* m_pSubmit;
 

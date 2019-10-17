@@ -1,16 +1,41 @@
 .tab_item
 {
-	display: inline-block;
-	cursor: pointer;
+	background: #f4f4f4;
+    width: 50%;
+    height: 150px;
+    font-size: 80px;
+    text-align: center;
+    border-style: solid;
+    border-color: #999999;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    font-family: 新宋体;
+    line-height: 150px;
 }
 
 .active_tab
 {
-	color:gray;
+	background: #dedede;
 }
 
 .login_view
 {
-	width:100%;
-	margin-top:128px;
+	border-radius: 30px;
+    width: 700px;
+    height: 400px;
+    background: #f4f4f4;
+	margin:0 auto;
+	padding-top: 20px;
+}
+
+.login_input
+{
+    background: #dedede;
+    height: 100px;
+    font-size: 60px;
+    width: 500px;
+    border: none;
+	border-radius: 30px;
+	margin:10px 0;
+	text-align: center;
 }

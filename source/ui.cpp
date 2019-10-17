@@ -64,12 +64,14 @@ LoginView::LoginView(MainApplication& app)
 	addStyleClass("login_view");
 
 	m_pError = nullptr;
-	m_pUserNameNotify = addWidget(std::make_unique<Wt::WText>(L"用户名"));
 	m_pUserNameInput = addWidget(std::make_unique<Wt::WLineEdit>());
+	m_pUserNameInput->setPlaceholderText(L"用户名");
+	m_pUserNameInput->addStyleClass("login_input");
 	addWidget(std::make_unique<Wt::WBreak>());
-	m_pPasswordNotify = addWidget(std::make_unique<Wt::WText>(L"密码"));
 	m_pPasswordInput = addWidget(std::make_unique<Wt::WLineEdit>());
+	m_pPasswordInput->setPlaceholderText(L"密码");
 	m_pPasswordInput->setAttributeValue("type", "password");
+	m_pPasswordInput->addStyleClass("login_input");
 	addWidget(std::make_unique<Wt::WBreak>());
 	m_pSubmit = addWidget(std::make_unique<Wt::WPushButton>("Sign in"));
 
@@ -88,8 +90,6 @@ void LoginView::Login()
 
 void LoginView::AfterLogin(const Wt::WString& name)
 {
-	m_pUserNameNotify->hide();
-	m_pPasswordNotify->hide();
 	m_pUserNameInput->hide();
 	m_pPasswordInput->hide();
 	m_pSubmit->hide();
