@@ -1,3 +1,8 @@
+body
+{
+    font-family: 新宋体;
+}
+
 .tab_item
 {
 	background: #f4f4f4;
@@ -32,12 +37,13 @@
 {
     background: #dedede;
     height: 100px;
-    font-size: 60px;
+    font-size: 45px;
     width: 500px;
     border: none;
 	border-radius: 30px;
 	margin:10px 0;
-	text-align: center;
+    text-align: center;
+    font-family: 新宋体;
 }
 
 .input_button
@@ -48,7 +54,8 @@
 	height: 100px;
 	font-size: 42px;
 	border: none;
-	border-radius: 30px;
+    border-radius: 30px;
+    font-family: Consolas;
 }
 
 .user_name
@@ -58,15 +65,17 @@
 	color: #887B77;
 	font-weight: bold;
 	text-align: center;
-	margin-top: 10px;
+    margin-top: 10px;
+    font-family: 新宋体;
 }
 
 .error
 {
 	font-size: 50px;
-	color: red;
+	color: rgba(255,0,0,0.8);
 	display: block;
-	font-weight: bold;
+    font-weight: bold;
+    font-family: 新宋体;
 }
 
 .shop_text
@@ -74,10 +83,10 @@
 	background: rgba(220,220,220,0.42);
     width: 600px;
     height: 150px;
-    display: block;
+    display: inline-block;
     border: none;
     border-radius: 30px;
-    font-size: 60px;
+    font-size: 45px;
     text-align: center;
     margin-left: 125px;
     margin-top: 15px;
@@ -90,7 +99,7 @@
 	border: none;
     border-radius: 30px;
     background: rgba(222,222,222,0.42);
-    font-size: 60px;
+    font-size: 45px;
     width: 600px;
     height: 150px;
     margin-left: 75px;
@@ -106,9 +115,10 @@
     background: rgba(15,149,255,0.42);
     width: 200px;
     height: 150px;
-    font-size: 60px;
+    font-size: 45px;
     margin-top: 15px;
     margin-bottom: 30px;
+    margin: auto 10px;
 }
 
 .shop_back_button
@@ -118,12 +128,11 @@
     background: rgba(15,149,255,0.42);
     width: 200px;
     height: 150px;
-    font-size: 60px;
-    display: block;
+    font-size: 45px;
+    display: inline-block;
     margin-left: 75px;
     margin-top: 15px;
     margin-right: 0px;
-    float: left;
 }
 
 .shop_name
@@ -135,7 +144,7 @@
     float: right;
     border: none;
     border-radius: 30px;
-    font-size: 60px;
+    font-size: 45px;
     text-align: center;
     margin-left: 0px;
     margin-top: 15px;
@@ -147,7 +156,7 @@
 .shop_cargo_name
 {
 	background: rgba(222,222,222,0.42);
-    font-size: 60px;
+    font-size: 45px;
     width: 200px;
     height: 100px;
     border: none;
@@ -163,7 +172,7 @@
 .shop_cargo_size
 {
 	background: rgba(222,222,222,0.42);
-    font-size: 60px;
+    font-size: 45px;
     height: 100px;
     width: 100px;
     border: none;
@@ -176,7 +185,7 @@
 .shop_cargo_notice
 {
 	background: red;
-    font-size: 60px;
+    font-size: 45px;
     width: 300px;
     height: 100px;
     border: none;
@@ -245,8 +254,7 @@
 .cargo_select
 {
     width: 240px;
-    height: 60px;
-    font-size: 40px;
+    font-size: 45px;
     background-color: #CCCCCC;
     border: none;
     margin-top: 20px;
@@ -256,8 +264,7 @@
 .cargo_size_input
 {
 	width: auto;
-    height: 60px;
-    font-size: 40px;
+    font-size: 45px;
     border: none;
     margin-left: 10px;
     background-color: #CCCCCC;
