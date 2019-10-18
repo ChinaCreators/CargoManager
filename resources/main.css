@@ -82,7 +82,7 @@ body
 {
 	background: rgba(220,220,220,0.42);
     width: 600px;
-    line-height: 125;
+    line-height: 125px;
     display: inline-block;
     border: none;
     border-radius: 30px;
