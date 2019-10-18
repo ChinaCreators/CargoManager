@@ -124,7 +124,7 @@ void ShopManager::LoadShop()
 		for (int j = 0; j < cargo_type_size; j++)
 		{
 			std::string cargo_name;
-			size_t cargo_size;
+			int cargo_size;
 			m_File >> cargo_name >> cargo_size;
 			buffer.insert(std::make_pair(cargo_name, Cargo{cargo_name, cargo_size}));
 		}

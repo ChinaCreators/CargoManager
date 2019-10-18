@@ -53,7 +53,7 @@ private:
 struct Cargo
 {
 	std::string m_Name;
-	size_t m_Size;
+	int m_Size;
 };
 
 struct Shop
